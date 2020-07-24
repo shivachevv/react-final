@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './input.module.scss'
 
 function Input({id, label, value, onChange, onBlur }) {
 
@@ -11,8 +12,8 @@ function Input({id, label, value, onChange, onBlur }) {
 
     return (
         <div>
-            <label htmlFor={id}>{label}</label>
-            <input id={id} value={value} name={id} onChange={changeHandler} onBlur={blurHandler}></input>
+            {/* <label htmlFor={id}>{label}</label> */}
+            <input id={id} value={value} name={id} onChange={changeHandler} onBlur={blurHandler} placeholder={label}></input>
           </div>
     );
 }

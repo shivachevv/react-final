@@ -5,7 +5,7 @@ import logo from '../../images/logo.png'
 
 function Header(props) {
     return (
-        <nav>
+        <nav className="sha">
             <Link className={styles.logo} to="/">
                 <img src={logo} alt="Logo" />
             </Link>
