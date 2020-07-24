@@ -1,0 +1,10 @@
+$bg-color:#c6c6c6;
+
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: $bg-color;
+}

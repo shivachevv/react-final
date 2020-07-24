@@ -9,8 +9,9 @@ import {
 } from 'react-router-dom'
 import Home from './Home';
 import Login from './views/Login/Login';
-import Header from './views/Header/Header';
-import Footer from './views/Footer/Footer';
+import Register from './views/Register/Register';
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
 import ErrorPage from './views/ErrorPage/ErrorPage';
 
 ReactDOM.render(
@@ -20,6 +21,7 @@ ReactDOM.render(
       <Switch>
         <Route path="/" exact component={Home}/>
         <Route path="/login" component={Login}/>
+        <Route path="/register" component={Register}/>
         <Route component={ErrorPage}/>
       </Switch>
       <Footer></Footer>
