@@ -14,10 +14,10 @@ class Register extends Component {
                 password: false,
                 rePassword: false
             },
-            errMsgs:{
-                email:'Email not valid!',
-                password:'Password should be more than 3 characters!',
-                rePassword:'Passwords do not match!'
+            errMsgs: {
+                email: 'Email not valid!',
+                password: 'Password should be more than 3 characters!',
+                rePassword: 'Passwords do not match!'
             }
         }
     }
@@ -84,18 +84,22 @@ class Register extends Component {
             rePassword
         } = this.state
 
+        const emailErr = this.state.errors.email
+        const passErr = this.state.errors.password
+        const rePassErr = this.state.errors.rePassword
+
         return (
             <div className={styles.container}>
                 <form className={[styles.form, 'sha'].join(' ')} onSubmit={this.handleSubmit}>
                     <h1 className="up">Befome a part of FFL!</h1>
 
-                    {this.state.errors.email ? (<h3 className={styles.error}>{this.state.errMsgs.email}</h3>) : ''}
-                    {this.state.errors.password ? (<h3 className={styles.error}>{this.state.errMsgs.password}</h3>) : ''}
-                    {this.state.errors.rePassword ? (<h3 className={styles.error}>{this.state.errMsgs.rePassword}</h3>) : ''}
+                    {emailErr ? (<h3 className={styles.error}>{this.state.errMsgs.email}</h3>) : ''}
+                    {passErr ? (<h3 className={styles.error}>{this.state.errMsgs.password}</h3>) : ''}
+                    {rePassErr ? (<h3 className={styles.error}>{this.state.errMsgs.rePassword}</h3>) : ''}
 
-                    <Input id="email" label="Email" onChange={this.changeHandlers.email} value={email} onBlur={this.blurHandlers.email}></Input>
-                    <Input id="password" label="Password" onChange={this.changeHandlers.password} value={password} onBlur={this.blurHandlers.password}></Input>
-                    <Input id="rePassword" label="Repeat Password" onChange={this.changeHandlers.rePassword} value={rePassword} onBlur={this.blurHandlers.rePassword}></Input>
+                    <Input error={emailErr ? 'error' : ''} id="email" label="Email" onChange={this.changeHandlers.email} value={email} onBlur={this.blurHandlers.email}></Input>
+                    <Input error={passErr ? 'error' : ''} id="password" label="Password" onChange={this.changeHandlers.password} value={password} onBlur={this.blurHandlers.password}></Input>
+                    <Input error={rePassErr ? 'error' : ''} id="rePassword" label="Repeat Password" onChange={this.changeHandlers.rePassword} value={rePassword} onBlur={this.blurHandlers.rePassword}></Input>
 
                     <button type="submit" className="up">Register</button>
                 </form>
