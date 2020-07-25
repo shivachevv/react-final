@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import styles from './register.module.scss'
 import Input from '../../components/Input/Input'
+import {auth} from '../../firebase'
 
 class Register extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            user:'',
             email: '',
             password: '',
             rePassword: '',
@@ -21,6 +23,10 @@ class Register extends Component {
             }
         }
     }
+
+    componentDidMount = () => {
+        
+    };
 
     changeHandlers = {
         email: v => {
@@ -72,9 +78,10 @@ class Register extends Component {
     }
 
 
-    handleSubmit = e => {
+    handleSubmit = async e => {
         e.preventDefault()
-        console.log(this.state);
+        const {user} = await auth.createUserWithEmailAndPassword(this.state.email, this.state.password)
+        console.log(user);
     }
 
     render() {
