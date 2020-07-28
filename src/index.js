@@ -15,18 +15,19 @@ import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import ErrorPage from './views/ErrorPage/ErrorPage';
 
+
 ReactDOM.render(
   <React.StrictMode>
     <UserProvider>
       <Router>
-        <Header></Header>
-        <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/login" component={Login} />
-          <Route path="/register" component={Register} />
-          <Route component={ErrorPage} />
-        </Switch>
-        <Footer></Footer>
+          <Header></Header>
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
+            <Route component={ErrorPage} />
+          </Switch>
+          <Footer></Footer>
       </Router>
     </UserProvider>
 
