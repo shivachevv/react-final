@@ -7,13 +7,11 @@ class UserProvider extends Component {
         super(props);
         this.state = {
             user: null,
-            ready: false
         };
     }
 
     componentDidMount = async () => {
         auth.onAuthStateChanged(userAuth => {
-            this.setState({ ready: true });
             this.setState({ user: userAuth });
         });
     };
