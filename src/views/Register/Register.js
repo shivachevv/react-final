@@ -2,31 +2,33 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import styles from './register.module.scss'
 import Input from '../../components/Input/Input'
-import {auth} from '../../firebase'
+import { auth } from '../../firebase'
 
 class Register extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            user:'',
+            user: '',
             email: '',
             password: '',
             rePassword: '',
             errors: {
                 email: false,
                 password: false,
-                rePassword: false
+                rePassword: false,
+                apiErr: false
             },
             errMsgs: {
                 email: 'Email not valid!',
                 password: 'Password should be more than 3 characters!',
-                rePassword: 'Passwords do not match!'
+                rePassword: 'Passwords do not match!',
+                apiErr: ''
             }
         }
     }
 
     componentDidMount = () => {
-        
+
     };
 
     changeHandlers = {
@@ -51,6 +53,11 @@ class Register extends Component {
         const newErrors = this.state.errors
         newErrors[err] = val
         this.setState({ errors: newErrors })
+    }
+    editErrorMsgs = (err, val) => {
+        const newErrors = this.state.errMsgs
+        newErrors[err] = val
+        this.setState({ errMsgs: newErrors })
     }
 
     blurHandlers = {
@@ -79,10 +86,16 @@ class Register extends Component {
     }
 
 
-    handleSubmit = async e => {
+    handleRegister = e => {
         e.preventDefault()
-        const {user} = await auth.createUserWithEmailAndPassword(this.state.email, this.state.password)
-        this.props.history.push('/')
+        auth.createUserWithEmailAndPassword(this.state.email, this.state.password)
+            .then(data => {
+                this.props.history.push('/')
+            })
+            .catch(err => {
+                this.editErrors('apiErr', true)
+                this.editErrorMsgs('apiErr', err.message)
+            })
     }
 
     render() {
@@ -95,15 +108,17 @@ class Register extends Component {
         const emailErr = this.state.errors.email
         const passErr = this.state.errors.password
         const rePassErr = this.state.errors.rePassword
+        const apiErr = this.state.errors.apiErr
 
         return (
             <div className={styles.container}>
-                <form className={[styles.form, 'sha'].join(' ')} onSubmit={this.handleSubmit}>
+                <form className={[styles.form, 'sha'].join(' ')} onSubmit={this.handleRegister}>
                     <h1 className="up">Befome a part of FFL!</h1>
 
                     {emailErr ? (<h3 className={styles.error}>{this.state.errMsgs.email}</h3>) : ''}
                     {passErr ? (<h3 className={styles.error}>{this.state.errMsgs.password}</h3>) : ''}
                     {rePassErr ? (<h3 className={styles.error}>{this.state.errMsgs.rePassword}</h3>) : ''}
+                    {apiErr ? (<h3 className={styles.error}>{this.state.errMsgs.apiErr}</h3>) : ''}
 
                     <Input error={emailErr ? 'error' : ''} id="email" label="Email" onChange={this.changeHandlers.email} value={email} onBlur={this.blurHandlers.email}></Input>
                     <Input error={passErr ? 'error' : ''} id="password" label="Password" onChange={this.changeHandlers.password} value={password} onBlur={this.blurHandlers.password}></Input>

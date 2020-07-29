@@ -16,10 +16,12 @@ class Login extends Component {
             errors: {
                 email: false,
                 password: false,
+                apiErr: false,
             },
             errMsgs: {
                 email: 'Email not valid!',
                 password: 'Password should be more than 3 characters!',
+                apiErr: '',
             }
         }
     }
@@ -44,6 +46,11 @@ class Login extends Component {
         newErrors[err] = val
         this.setState({ errors: newErrors })
     }
+    editErrorMsgs = (err, val) => {
+        const newErrors = this.state.errMsgs
+        newErrors[err] = val
+        this.setState({ errMsgs: newErrors })
+    }
 
     blurHandlers = {
         email: v => {
@@ -64,10 +71,16 @@ class Login extends Component {
     }
 
 
-    handleSubmit = async e => {
+    handleLogin = e => {
         e.preventDefault()
-        await auth.signInWithEmailAndPassword(this.state.email, this.state.password)
-        this.props.history.push('/')
+        auth.signInWithEmailAndPassword(this.state.email, this.state.password)
+            .then(data => {
+                this.props.history.push('/')
+            })
+            .catch(err => {
+                this.editErrors('apiErr', true)
+                this.editErrorMsgs('apiErr', err.message)
+            })
     }
 
     render() {
@@ -79,14 +92,16 @@ class Login extends Component {
 
         const emailErr = this.state.errors.email
         const passErr = this.state.errors.password
+        const apiErr = this.state.errors.apiErr
 
         return (
             <div className={styles.container}>
-                <form className={[styles.form, 'sha'].join(' ')} onSubmit={this.handleSubmit}>
+                <form className={[styles.form, 'sha'].join(' ')} onSubmit={this.handleLogin}>
                     <h1 className="up">Login to FFL!</h1>
 
                     {emailErr ? (<h3 className={styles.error}>{this.state.errMsgs.email}</h3>) : ''}
                     {passErr ? (<h3 className={styles.error}>{this.state.errMsgs.password}</h3>) : ''}
+                    {apiErr ? (<h3 className={styles.error}>{this.state.errMsgs.apiErr}</h3>) : ''}
                     <Input error={emailErr ? 'error' : ''} id="email" label="Email" onChange={this.changeHandlers.email} value={email} onBlur={this.blurHandlers.email}></Input>
                     <Input error={passErr ? 'error' : ''} id="password" label="Password" onChange={this.changeHandlers.password} value={password} onBlur={this.blurHandlers.password}></Input>
 
