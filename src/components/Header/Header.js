@@ -9,7 +9,11 @@ import { auth } from '../../firebase'
 function Header(props) {
     const user = useContext(UserContext)
 
-    const logoutUser = () => auth.signOut();
+    const logoutUser = (e) => {
+        e.preventDefault()
+        auth.signOut()
+        console.log('Successful logOUT!');
+    }
 
     return (
         <nav className="sha">
@@ -23,7 +27,7 @@ function Header(props) {
                 {user ?
                     <Fragment>
                         <Link className={styles.navlinks} to="/myteam/:id">My Team</Link>
-                        <a className={styles.navlinks} onClick={logoutUser}>Logout</a>
+                        <a href="" className={styles.navlinks} onClick={logoutUser}>Logout</a>
                     </Fragment>
                     :
                     <Fragment>

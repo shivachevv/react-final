@@ -1,5 +1,6 @@
 import React, { Component, createContext } from "react";
-import { auth } from "./firebase";
+import  { auth } from "./firebase";
+// import  firebase from "firebase/app";
 
 export const UserContext = createContext({ user: null });
 class UserProvider extends Component {
@@ -10,16 +11,15 @@ class UserProvider extends Component {
         };
     }
 
-    componentDidMount = async () => {
+    componentDidMount = () => {
         auth.onAuthStateChanged(userAuth => {
             this.setState({ user: userAuth });
         });
     };
 
     render() {
-        const isAuth = this.state.user ? this.state.user : ''
         return (
-            <UserContext.Provider value={isAuth}>
+            <UserContext.Provider value={this.state.user}>
                 {this.props.children}
             </UserContext.Provider>
         )

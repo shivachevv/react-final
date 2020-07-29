@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import styles from './register.module.scss'
 import Input from '../../components/Input/Input'
 import {auth} from '../../firebase'
@@ -54,7 +55,7 @@ class Register extends Component {
 
     blurHandlers = {
         email: v => {
-            const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g
+            const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g
             if (!v.match(emailRegex)) {
                 this.editErrors('email', true)
             } else {
@@ -81,7 +82,7 @@ class Register extends Component {
     handleSubmit = async e => {
         e.preventDefault()
         const {user} = await auth.createUserWithEmailAndPassword(this.state.email, this.state.password)
-        console.log(user);
+        this.props.history.push('/')
     }
 
     render() {
@@ -117,4 +118,4 @@ class Register extends Component {
 
 
 
-export default Register;
+export default withRouter(Register);

@@ -3,6 +3,7 @@ import styles from './login.module.scss'
 import Input from '../../components/Input/Input'
 import { auth } from '../../firebase'
 import { UserContext } from '../../UserProvider'
+import { withRouter } from 'react-router-dom'
 
 
 class Login extends Component {
@@ -46,7 +47,7 @@ class Login extends Component {
 
     blurHandlers = {
         email: v => {
-            const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g
+            const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g
             if (!v.match(emailRegex)) {
                 this.editErrors('email', true)
             } else {
@@ -65,13 +66,8 @@ class Login extends Component {
 
     handleSubmit = async e => {
         e.preventDefault()
-        const { user } = await auth.signInWithEmailAndPassword(this.state.email, this.state.password)
-        console.log(user);
-    }
-
-    test = () => {
-        const user = this.context
-        console.log('login', user)
+        await auth.signInWithEmailAndPassword(this.state.email, this.state.password)
+        this.props.history.push('/')
     }
 
     render() {
@@ -96,7 +92,7 @@ class Login extends Component {
 
                     <button type="submit" className="up">Login</button>
                 </form>
-                
+
             </div>
         );
     }
@@ -104,4 +100,4 @@ class Login extends Component {
 
 
 
-export default Login;
+export default withRouter(Login);
