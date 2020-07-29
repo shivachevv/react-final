@@ -4,7 +4,7 @@ import styles from './header.module.scss'
 import logo from '../../images/logo.png'
 import { UserContext } from '../../UserProvider'
 import { auth } from '../../firebase'
-
+import defineLinks from '../../NavLinksProvider'
 
 function Header(props) {
     const user = useContext(UserContext)
@@ -13,7 +13,7 @@ function Header(props) {
         e.preventDefault()
         auth.signOut()
         console.log('Successful logOUT!');
-    }
+    }  
 
     return (
         <nav className="sha">
@@ -22,19 +22,10 @@ function Header(props) {
             </Link>
 
             <div className={[styles.navigation, styles.up].join(' ')}>
-                <Link className={styles.navlinks} to="/">Home</Link>
-                <Link className={styles.navlinks} to="/standings">Standings</Link>
-                {user ?
-                    <Fragment>
-                        <Link className={styles.navlinks} to="/myteam/:id">My Team</Link>
-                        <a href="" className={styles.navlinks} onClick={logoutUser}>Logout</a>
-                    </Fragment>
-                    :
-                    <Fragment>
-                        <Link className={styles.navlinks} to="/login">Login</Link>
-                        <Link className={styles.navlinks} to="/register">Register</Link>
-                    </Fragment>
-                }
+                {defineLinks(user).map(link => {
+                    return <Link key={link.path} className={styles.navlinks} to={link.path}>{link.label}</Link>
+                })}
+                {user ? <a href="" className={styles.navlinks} onClick={logoutUser}>Logout</a> : ''}
             </div>
         </nav>
     );

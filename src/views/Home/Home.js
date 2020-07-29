@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styles from './home.module.scss'
-import {auth} from './firebase'
+import {auth} from '../../firebase'
 
 class Home extends Component {
   constructor(props) {

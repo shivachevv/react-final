@@ -1,6 +1,6 @@
 import React from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
-import Home from './Home'
+import Home from './views/Home/Home'
 import Login from './views/Login/Login'
 import Register from './views/Register/Register'
 import ErrorPage from './views/ErrorPage/ErrorPage'
