@@ -90,7 +90,7 @@ class Register extends Component {
         e.preventDefault()
         auth.createUserWithEmailAndPassword(this.state.email, this.state.password)
             .then(data => {
-                this.props.history.push('/')
+                this.props.history.push('/create-team')
             })
             .catch(err => {
                 this.editErrors('apiErr', true)

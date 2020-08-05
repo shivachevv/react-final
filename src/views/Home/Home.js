@@ -10,8 +10,7 @@ class Home extends Component {
   }
 
 componentDidMount(){
-  // const user = auth.currentUser
-  // console.log(user);
+
 }
 
   render() {
