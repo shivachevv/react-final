@@ -1,4 +1,4 @@
-import React, { useContext, Fragment } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom'
 import styles from './header.module.scss'
 import logo from '../../images/logo.png'
@@ -13,7 +13,7 @@ function Header(props) {
         e.preventDefault()
         auth.signOut()
         console.log('Successful logOUT!');
-    }  
+    }
 
     return (
         <nav className="sha">

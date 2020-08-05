@@ -23,7 +23,7 @@ auth.onAuthStateChanged(user => {
       <UserProvider>
         <Router>
           <Header></Header>
-            <Routes user={user} />
+          <Routes user={user} />
           <Footer></Footer>
         </Router>
       </UserProvider>

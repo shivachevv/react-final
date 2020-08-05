@@ -1,23 +1,39 @@
 import React, { Component } from 'react';
+import { UserContext } from '../../UserProvider'
 
 class CreateTeam extends Component {
+    static contextType = UserContext
+
     constructor(props) {
         super(props);
 
         this.state = {
+            user: null,
             players: '',
             chosenClub: '',
-            userTeam: {}
+            userTeam: {},
+            positionLayout: ['gk', 'dl', 'dc', 'dr', 'ml', 'mc', 'mr', 'st'],
+            isTeamFull: false
         }
     }
+
 
     async componentDidMount() {
         const response = await fetch('https://softuni-react-final.firebaseio.com/allPlayersData.json')
         const data = await response.json()
         this.setState({
-            players: data.data
+            players: data.data,
+            user: this.context
         })
     }
+
+    updateIsTeamFull = () => {
+        const isTeamFull = Object.keys(this.state.userTeam).length === 8
+        return this.setState({
+            isTeamFull
+        })
+    }
+
 
     selectClub = (e) => {
         e.preventDefault()
@@ -40,19 +56,52 @@ class CreateTeam extends Component {
         this.setState({
             userTeam
         })
+        this.updateIsTeamFull()
     }
 
     isThereUserTeam = () => {
-        return Object.keys(this.state.userTeam).length
+        return Object.keys(this.state.userTeam).length ? true : false
+    }
+
+    renderUserTeam = () => {
+        return this.state.positionLayout.map(pos => {
+            return (
+                <div key={pos}>
+                    <span>{pos.toUpperCase()}: </span>
+                    <span>{this.state.userTeam[pos]}</span>
+                </div>
+            )
+        })
     }
 
     handleSubmitTeam = (e) => {
         e.preventDefault()
-        console.log(this.state.userTeam);
+
+        if (this.state.isTeamFull) {
+            console.log("TEAM IS SENT");
+            const payload = this.state.userTeam
+            const name = this.state.user.email.split('@')[0]
+            fetch(`https://softuni-react-final.firebaseio.com/users/${name}.json`, {
+                method: 'PATCH',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        }
+
     }
 
     render() {
-        const { players, chosenClub, userTeam } = this.state
+        const { players, chosenClub, userTeam, isTeamFull } = this.state
         let positions = ''
         if (chosenClub) {
             [positions] = Object.values(chosenClub)
@@ -62,20 +111,12 @@ class CreateTeam extends Component {
             return (
                 <form onSubmit={this.handleSubmitTeam}>
                     <h1>Choose your team!</h1>
+                    {!isTeamFull ? (<h3>Your team is not complete!</h3>) : ''}
+
                     <div>
                         <h3>Your team!</h3>
                         <div>
-                            {this.isThereUserTeam() &&
-                                Object.keys(userTeam).map(pos => {
-                                    const name = userTeam[pos]
-                                    return (
-                                        <div key={pos}>
-                                            <span>{pos}: </span>
-                                            <span>{name}</span>
-                                        </div>
-                                    )
-                                })
-                            }
+                            {this.renderUserTeam()}
                         </div>
 
                     </div>

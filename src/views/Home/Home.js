@@ -1,26 +1,26 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './home.module.scss'
-import {auth} from '../../firebase'
-
-class Home extends Component {
-  constructor(props) {
-    super(props);
+import { auth } from '../../firebase'
 
 
-  }
+const Home = () => {
 
-componentDidMount(){
+  const [counter, setCounter] = useState(0)
 
-}
+  useEffect(() => {
+    return () => {
+      console.log('USEEFFECT!!!!!!!!!');
+    }
+  }, [])
 
-  render() {
-    return (
-      <div>
-        HOME PAGE
-      </div >
-    );
-  }
-}
+  return (
+    <div>
+      Home Page
+      <p>{counter}</p>
+      <button onClick={() => { setCounter(counter + 1) }}>ADD</button>
+    </div>
+  );
+};
 
 export default Home;
 
