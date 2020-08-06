@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { UserContext } from '../../UserProvider'
+import Input from '../../components/Input/Input'
+
 
 class CreateTeam extends Component {
     static contextType = UserContext
@@ -13,7 +15,13 @@ class CreateTeam extends Component {
             chosenClub: '',
             userTeam: {},
             positionLayout: ['gk', 'dl', 'dc', 'dr', 'ml', 'mc', 'mr', 'st'],
-            isTeamFull: false
+            isTeamFull: false,
+            teamName: '',
+            teamLogo: '',
+            errors: {
+                teamName: false,
+                teamLogo: false,
+            },
         }
     }
 
@@ -76,11 +84,18 @@ class CreateTeam extends Component {
 
     handleSubmitTeam = (e) => {
         e.preventDefault()
-
-        if (this.state.isTeamFull) {
+        const { isTeamFull, teamName, teamLogo, userTeam } = this.state
+        const { teamLogoErr, teamNameErr } = this.state.errors
+        if (isTeamFull && !teamLogoErr && !teamNameErr) {
             console.log("TEAM IS SENT");
-            const payload = this.state.userTeam
-            const name = this.state.user.email.split('@')[0]
+            const payload = {
+                teamName,
+                teamLogo,
+                rounds: {
+                    r1: userTeam
+                }
+            }
+            const name = this.state.user.email.split('.').join('-')
             fetch(`https://softuni-react-final.firebaseio.com/users/${name}.json`, {
                 method: 'PATCH',
                 mode: 'cors',
@@ -96,12 +111,50 @@ class CreateTeam extends Component {
                 .catch((error) => {
                     console.error('Error:', error);
                 });
+        } else {
+            console.log('OOPS');
         }
-
     }
 
+    changeHandlers = {
+        teamName: v => {
+            return this.setState({
+                teamName: v
+            })
+        },
+        teamLogo: v => {
+            return this.setState({
+                teamLogo: v
+            })
+        }
+    }
+
+    blurHandlers = {
+        teamName: v => {
+            if (!v) {
+                this.editErrors('teamName', true)
+            } else {
+                this.editErrors('teamName', false)
+            }
+        },
+        teamLogo: v => {
+            if (!v) {
+                this.editErrors('teamLogo', true)
+            } else {
+                this.editErrors('teamLogo', false)
+            }
+        }
+    }
+
+    editErrors = (err, val) => {
+        const newErrors = this.state.errors
+        newErrors[err] = val
+        this.setState({ errors: newErrors })
+    }
     render() {
-        const { players, chosenClub, userTeam, isTeamFull } = this.state
+        const { players, chosenClub, userTeam, isTeamFull, teamName, teamLogo } = this.state
+        const teamNameErr = this.state.errors.teamName
+        const teamLogoErr = this.state.errors.teamLogo
         let positions = ''
         if (chosenClub) {
             [positions] = Object.values(chosenClub)
@@ -111,10 +164,16 @@ class CreateTeam extends Component {
             return (
                 <form onSubmit={this.handleSubmitTeam}>
                     <h1>Choose your team!</h1>
-                    {!isTeamFull ? (<h3>Your team is not complete!</h3>) : ''}
+                    {teamNameErr ? (<h3>Please select a name for your team!</h3>) : ''}
+                    {teamLogoErr ? (<h3>Please add a logo URL for your team!</h3>) : ''}
+                    <div>
+                        <Input error={teamNameErr ? 'error' : ''} id="teamName" label="Team Name" onChange={this.changeHandlers.teamName} value={teamName} onBlur={this.blurHandlers.teamName}></Input>
+                        <Input error={teamLogoErr ? 'error' : ''} id="teamLogo" label="Team Logo" onChange={this.changeHandlers.teamLogo} value={teamLogo} onBlur={this.blurHandlers.teamLogo}></Input>
+                    </div>
 
                     <div>
                         <h3>Your team!</h3>
+                        {!isTeamFull ? (<h3>Your team is not complete!</h3>) : ''}
                         <div>
                             {this.renderUserTeam()}
                         </div>
