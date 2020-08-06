@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { UserContext } from '../../UserProvider'
 import Input from '../../components/Input/Input'
+import Badge from '../../components/Badge/Badge'
 
+import styles from './createteam.module.scss'
 
 class CreateTeam extends Component {
     static contextType = UserContext
@@ -22,6 +24,7 @@ class CreateTeam extends Component {
                 teamName: false,
                 teamLogo: false,
             },
+            badgeSelected: ''
         }
     }
 
@@ -46,6 +49,9 @@ class CreateTeam extends Component {
     selectClub = (e) => {
         e.preventDefault()
         const chosenClubName = e.currentTarget.dataset.team
+        this.setState({
+            badgeSelected: chosenClubName
+        })
         const [team] = this.state.players.filter(x => {
             const teamName = Object.keys(x)[0]
             return chosenClubName === teamName ? x : null
@@ -71,12 +77,13 @@ class CreateTeam extends Component {
         return Object.keys(this.state.userTeam).length ? true : false
     }
 
+
     renderUserTeam = () => {
         return this.state.positionLayout.map(pos => {
             return (
-                <div key={pos}>
-                    <span>{pos.toUpperCase()}: </span>
-                    <span>{this.state.userTeam[pos]}</span>
+                <div key={pos} className={[styles.player, styles[pos], 'up'].join(' ')}>
+                    <span>{pos.toUpperCase()}</span>
+                    <span className={this.state.userTeam[pos] ? styles.spanfull : ''}>{this.state.userTeam[pos]}</span>
                 </div>
             )
         })
@@ -152,7 +159,7 @@ class CreateTeam extends Component {
         this.setState({ errors: newErrors })
     }
     render() {
-        const { players, chosenClub, userTeam, isTeamFull, teamName, teamLogo } = this.state
+        const { players, chosenClub, userTeam, isTeamFull, teamName, teamLogo, badgeSelected } = this.state
         const teamNameErr = this.state.errors.teamName
         const teamLogoErr = this.state.errors.teamLogo
         let positions = ''
@@ -162,46 +169,49 @@ class CreateTeam extends Component {
 
         if (players) {
             return (
-                <form onSubmit={this.handleSubmitTeam}>
-                    <h1>Choose your team!</h1>
-                    {teamNameErr ? (<h3>Please select a name for your team!</h3>) : ''}
-                    {teamLogoErr ? (<h3>Please add a logo URL for your team!</h3>) : ''}
-                    <div>
+                <form onSubmit={this.handleSubmitTeam} className={styles.form}>
+                    <h1 className={[styles.heading, 'up'].join(' ')}>Choose your team!</h1>
+                    {teamNameErr ? (<h3 className={styles.error}>Please select a name for your team!</h3>) : ''}
+                    {teamLogoErr ? (<h3 className={styles.error}>Please add a logo URL for your team!</h3>) : ''}
+                    <div className={styles.input}>
                         <Input error={teamNameErr ? 'error' : ''} id="teamName" label="Team Name" onChange={this.changeHandlers.teamName} value={teamName} onBlur={this.blurHandlers.teamName}></Input>
                         <Input error={teamLogoErr ? 'error' : ''} id="teamLogo" label="Team Logo" onChange={this.changeHandlers.teamLogo} value={teamLogo} onBlur={this.blurHandlers.teamLogo}></Input>
                     </div>
 
-                    <div>
-                        <h3>Your team!</h3>
-                        {!isTeamFull ? (<h3>Your team is not complete!</h3>) : ''}
-                        <div>
+                    <div className={styles.myteamcontainer}>
+                        <h3 className='up'>Your team!</h3>
+                        {!isTeamFull ? (<h3 className={styles.error}>Your team is not complete!</h3>) : ''}
+                        <div className={styles.myteam}>
                             {this.renderUserTeam()}
                         </div>
 
                     </div>
-                    <div>
+                    <div className={styles.logos}>
                         {players.map(p => {
-                            const name = Object.keys(p)
-                            return (<a onClick={this.selectClub} href="" data-team={name} key={name}>
-                                <img src={require(`../../images/${name}.png`)} />
-                            </a>)
+                            const [name] = Object.keys(p)
+                            return (<Badge name={name} onClick={this.selectClub} key={name} selected={badgeSelected} />
+                            )
                         })}
                     </div>
-                    {positions &&
-                        positions.map(p => {
-                            const positionName = Object.keys(p)
-                            const playersArray = p[positionName]
-                            return (<div key={positionName}>
-                                <h3>{positionName}</h3>
-                                {playersArray.map(pl => {
-                                    return (
-                                        <a href="" onClick={this.addPlayerToTeam} data-position={positionName} key={pl.name}>
-                                            {pl.name}
-                                        </a>
-                                    )
-                                })}
-                            </div>)
-                        })}
+                    <div className={styles.playerscontainer}>
+                        {positions &&
+                            positions.map(p => {
+                                const [positionName] = Object.keys(p)
+                                const playersArray = p[positionName]
+                                return (
+                                    <div className={styles[positionName]} key={positionName}>
+                                        <h3 className='up'>{positionName}</h3>
+                                        {playersArray.map(pl => {
+                                            return (
+                                                <a href="" onClick={this.addPlayerToTeam} data-position={positionName} key={pl.name}>
+                                                    {pl.name}
+                                                </a>
+                                            )
+                                        })}
+                                    </div>
+                                )
+                            })}
+                    </div>
                     <button>Submit Team!</button>
                 </form>
             );
