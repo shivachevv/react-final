@@ -23,6 +23,7 @@ class CreateTeam extends Component {
             teamLogo: '',
             errors: {
                 teamName: false,
+                teamUniqueName: false,
                 teamLogo: false,
             },
             badgeSelected: ''
@@ -93,8 +94,8 @@ class CreateTeam extends Component {
     handleSubmitTeam = (e) => {
         e.preventDefault()
         const { isTeamFull, teamName, teamLogo, userTeam } = this.state
-        const { teamLogoErr, teamNameErr } = this.state.errors
-        if (isTeamFull && !teamLogoErr && !teamNameErr) {
+        const { teamLogoErr, teamNameErr, teamUniqueNameErr } = this.state.errors
+        if (isTeamFull && !teamLogoErr && !teamNameErr && !teamUniqueNameErr) {
             console.log("TEAM IS SENT");
             const payload = {
                 teamName,
@@ -138,11 +139,16 @@ class CreateTeam extends Component {
     }
 
     blurHandlers = {
-        teamName: v => {
+        teamName: async v => {
             if (!v) {
                 this.editErrors('teamName', true)
+            } else if (!await this.uniqueTeamNameCheck(v)) {
+                console.log('check');
+                this.editErrors('teamUniqueName', true)
+                this.editErrors('teamName', false)
             } else {
                 this.editErrors('teamName', false)
+                this.editErrors('teamUniqueName', false)
             }
         },
         teamLogo: v => {
@@ -154,6 +160,17 @@ class CreateTeam extends Component {
         }
     }
 
+    uniqueTeamNameCheck = async (teamName) => {
+        const response = await fetch('https://softuni-react-final.firebaseio.com/users.json')
+        const data = await response.json()
+        const isUnique = Object
+            .values(data)
+            .filter(x => {
+                return x.teamName === teamName
+            }).length ? false : true
+        return isUnique
+    }
+
     editErrors = (err, val) => {
         const newErrors = this.state.errors
         newErrors[err] = val
@@ -162,6 +179,7 @@ class CreateTeam extends Component {
     render() {
         const { players, chosenClub, userTeam, isTeamFull, teamName, teamLogo, badgeSelected } = this.state
         const teamNameErr = this.state.errors.teamName
+        const teamUniqueNameErr = this.state.errors.teamUniqueName
         const teamLogoErr = this.state.errors.teamLogo
         let positions = ''
         if (chosenClub) {
@@ -173,9 +191,10 @@ class CreateTeam extends Component {
                 <form onSubmit={this.handleSubmitTeam} className={styles.form}>
                     <h1 className={[styles.heading, 'up'].join(' ')}>Choose your team!</h1>
                     {teamNameErr ? (<h3 className={styles.error}>Please select a name for your team!</h3>) : ''}
+                    {teamUniqueNameErr ? (<h3 className={styles.error}>This team name is already taken!</h3>) : ''}
                     {teamLogoErr ? (<h3 className={styles.error}>Please add a logo URL for your team!</h3>) : ''}
                     <div className={styles.input}>
-                        <Input error={teamNameErr ? 'error' : ''} id="teamName" label="Team Name" onChange={this.changeHandlers.teamName} value={teamName} onBlur={this.blurHandlers.teamName}></Input>
+                        <Input error={teamNameErr || teamUniqueNameErr ? 'error' : ''} id="teamName" label="Team Name" onChange={this.changeHandlers.teamName} value={teamName} onBlur={this.blurHandlers.teamName}></Input>
                         <Input error={teamLogoErr ? 'error' : ''} id="teamLogo" label="Team Logo" onChange={this.changeHandlers.teamLogo} value={teamLogo} onBlur={this.blurHandlers.teamLogo}></Input>
                     </div>
 
@@ -213,7 +232,7 @@ class CreateTeam extends Component {
                                 )
                             })}
                     </div>
-                    <SubmitBtn title="Create your team!"/>
+                    <SubmitBtn title="Create your team!" />
                 </form>
             );
         } else {
