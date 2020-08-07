@@ -3,6 +3,7 @@ import { UserContext } from '../../UserProvider'
 import Input from '../../components/Input/Input'
 import Badge from '../../components/Badge/Badge'
 import SubmitBtn from '../../components/SubmitBtn/SubmitBtn'
+import ErrorMsg from '../../components/ErrorMsg/ErrorMsg'
 
 import styles from './createteam.module.scss'
 
@@ -121,7 +122,7 @@ class CreateTeam extends Component {
                     console.error('Error:', error);
                 });
         } else {
-            console.log('OOPS');
+            this.editErrors('submitError', true)
         }
     }
 
@@ -180,6 +181,7 @@ class CreateTeam extends Component {
         const teamNameErr = this.state.errors.teamName
         const teamUniqueNameErr = this.state.errors.teamUniqueName
         const teamLogoErr = this.state.errors.teamLogo
+        const submitError = this.state.errors.submitError
         let positions = ''
         if (chosenClub) {
             [positions] = Object.values(chosenClub)
@@ -189,9 +191,10 @@ class CreateTeam extends Component {
             return (
                 <form onSubmit={this.handleSubmitTeam} className={styles.form}>
                     <h1 className={[styles.heading, 'up'].join(' ')}>Choose your team!</h1>
-                    {teamNameErr ? (<h3 className={styles.error}>Please select a name for your team!</h3>) : ''}
-                    {teamUniqueNameErr ? (<h3 className={styles.error}>This team name is already taken!</h3>) : ''}
-                    {teamLogoErr ? (<h3 className={styles.error}>Please add a logo URL for your team!</h3>) : ''}
+                    <ErrorMsg error={teamNameErr} msg="Please select a name for your team!"/>
+                    <ErrorMsg error={teamUniqueNameErr} msg="This team name is already taken!"/>
+                    <ErrorMsg error={teamLogoErr} msg="Please add a logo URL for your team!"/>
+
                     <div className={styles.input}>
                         <Input error={teamNameErr || teamUniqueNameErr ? 'error' : ''} id="teamName" label="Team Name" onChange={this.changeHandlers.teamName} value={teamName} onBlur={this.blurHandlers.teamName}></Input>
                         <Input error={teamLogoErr ? 'error' : ''} id="teamLogo" label="Team Logo" onChange={this.changeHandlers.teamLogo} value={teamLogo} onBlur={this.blurHandlers.teamLogo}></Input>
@@ -199,7 +202,8 @@ class CreateTeam extends Component {
 
                     <div className={styles.myteamcontainer}>
                         <h3 className='up'>Your team!</h3>
-                        {!isTeamFull ? (<h3 className={styles.error}>Your team is not complete!</h3>) : ''}
+
+                        <ErrorMsg error={!isTeamFull} msg="Your team is not complete!"/>
                         <div className={styles.myteam}>
                             {this.renderUserTeam()}
                         </div>
@@ -231,6 +235,7 @@ class CreateTeam extends Component {
                                 )
                             })}
                     </div>
+                    <ErrorMsg error={submitError} msg="You are missing something!"/>
                     <SubmitBtn title="Create your team!" />
                 </form>
             );
