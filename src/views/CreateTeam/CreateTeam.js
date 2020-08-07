@@ -143,7 +143,6 @@ class CreateTeam extends Component {
             if (!v) {
                 this.editErrors('teamName', true)
             } else if (!await this.uniqueTeamNameCheck(v)) {
-                console.log('check');
                 this.editErrors('teamUniqueName', true)
                 this.editErrors('teamName', false)
             } else {
