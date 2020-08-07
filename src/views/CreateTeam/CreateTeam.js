@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { UserContext } from '../../UserProvider'
 import Input from '../../components/Input/Input'
 import Badge from '../../components/Badge/Badge'
+import SubmitBtn from '../../components/SubmitBtn/SubmitBtn'
 
 import styles from './createteam.module.scss'
 
@@ -212,7 +213,7 @@ class CreateTeam extends Component {
                                 )
                             })}
                     </div>
-                    <button>Submit Team!</button>
+                    <SubmitBtn title="Create your team!"/>
                 </form>
             );
         } else {

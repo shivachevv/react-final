@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styles from './login.module.scss'
 import Input from '../../components/Input/Input'
+import SubmitBtn from '../../components/SubmitBtn/SubmitBtn'
 import { auth } from '../../firebase'
 import { UserContext } from '../../UserProvider'
 import { withRouter } from 'react-router-dom'
@@ -105,7 +106,7 @@ class Login extends Component {
                     <Input error={emailErr ? 'error' : ''} id="email" label="Email" onChange={this.changeHandlers.email} value={email} onBlur={this.blurHandlers.email}></Input>
                     <Input error={passErr ? 'error' : ''} id="password" label="Password" onChange={this.changeHandlers.password} value={password} onBlur={this.blurHandlers.password}></Input>
 
-                    <button type="submit" className="up">Login</button>
+                    <SubmitBtn title="Login" />
                 </form>
 
             </div>

@@ -1,7 +1,7 @@
 $bg-color:#efefef;
 $h1-color:#924243;
 $err-color: #a9362f;
-$btn-color:#017401;
+
 
 .container {
     width: 100%;
@@ -44,26 +44,6 @@ $btn-color:#017401;
             transition: all 0.3s;
         }
 
-        button {
-            width: 30%;
-            background-color: $btn-color;
-            color: $bg-color;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 10px;
-            font-size: 1.2rem;
-            transition: all 0.3s;
-
-            &:hover {
-                background-color: darken($btn-color, 10);
-                box-shadow: 0px 6px 19px -8px rgba(0, 0, 0, 0.75);
-                cursor: pointer;
-            }
-
-            &:focus-within {
-                box-shadow: 0px 6px 28px -5px rgba(0, 0, 0, 0.75);
-            }
-        }
     }
 
 }

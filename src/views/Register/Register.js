@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import styles from './register.module.scss'
 import Input from '../../components/Input/Input'
+import SubmitBtn from '../../components/SubmitBtn/SubmitBtn'
 import { auth } from '../../firebase'
 
 class Register extends Component {
@@ -124,7 +125,7 @@ class Register extends Component {
                     <Input error={passErr ? 'error' : ''} id="password" label="Password" onChange={this.changeHandlers.password} value={password} onBlur={this.blurHandlers.password}></Input>
                     <Input error={rePassErr ? 'error' : ''} id="rePassword" label="Repeat Password" onChange={this.changeHandlers.rePassword} value={rePassword} onBlur={this.blurHandlers.rePassword}></Input>
 
-                    <button type="submit" className="up">Register</button>
+                    <SubmitBtn title="Register" />
                 </form>
             </div>
         );
