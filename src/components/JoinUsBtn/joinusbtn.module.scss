@@ -1,0 +1,39 @@
+$btn-color:#00476d;
+
+.joinus {
+    display: inline-block;
+    height: 10%;
+    background-color: $btn-color;
+    text-align: center;
+    padding: 40px 80px;
+    margin: 0 40px 0 0 ;
+    line-height: 0%;
+    text-decoration: none;
+    color: #e9e9e9;
+    font-size: 2rem;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    transition: all 0.3s;
+
+
+    &:hover {
+        box-shadow: 0px 6px 19px -8px rgba(0, 0, 0, 0.75);    }
+    &::after {
+        position: absolute;
+        content: '';
+        bottom:0px;
+        right: 0px;
+        width: 100%;
+        height: 100%;
+        max-height: 5px;
+        background-color: darken($btn-color, 10);
+        transition: all 0.3s;
+        z-index: -1;
+    }
+    &:hover:after {
+        max-height: 100%;
+        z-index: -1;
+    }
+}

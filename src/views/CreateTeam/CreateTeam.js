@@ -41,6 +41,10 @@ class CreateTeam extends Component {
         })
     }
 
+    componentDidUpdate() {
+        console.log(this.state.user);
+    }
+
     updateIsTeamFull = () => {
         const isTeamFull = Object.keys(this.state.userTeam).length === 8
         return this.setState({
@@ -177,7 +181,7 @@ class CreateTeam extends Component {
         this.setState({ errors: newErrors })
     }
     render() {
-        const { players, chosenClub, userTeam, isTeamFull, teamName, teamLogo, badgeSelected } = this.state
+        const { players, chosenClub, isTeamFull, teamName, teamLogo, badgeSelected } = this.state
         const teamNameErr = this.state.errors.teamName
         const teamUniqueNameErr = this.state.errors.teamUniqueName
         const teamLogoErr = this.state.errors.teamLogo

@@ -7,7 +7,7 @@ function Badge({name, onClick, selected}) {
     }
     return (
         <a onClick={clickHandler} href="" data-team={name} className={[styles.logo, selected === name ? styles.selected : '' ].join(' ')}>
-            <img src={require(`../../images/${name}.png`)} />
+            <img src={require(`../../images/${name}.png`)} alt="badge"/>
         </a>
     );
 }

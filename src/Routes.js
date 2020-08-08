@@ -25,6 +25,8 @@ const Routes = (props) => {
                     setCreateTeamGuard(true)
                     setIsLoading(false)
                 }
+            } else {
+                setIsLoading(false)
             }
         }
         createTeamGuardFn();

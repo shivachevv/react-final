@@ -1,25 +1,36 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import styles from './home.module.scss'
-import { auth } from '../../firebase'
-
+import { UserContext } from '../../UserProvider'
+import JoinUsBtn from '../../components/JoinUsBtn/JoinUsBtn'
+import Slider from '../../components/Slider/Slider'
+import images from '../../components/Slider/slides'
 
 const Home = () => {
-
-  const [counter, setCounter] = useState(0)
+  const user = useContext(UserContext)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    return () => {
-      console.log('USEEFFECT!!!!!!!!!');
-    }
-  }, [])
+    setLoading(false)
+  }, [user])
 
-  return (
-    <div>
-      Home Page
-      <p>{counter}</p>
-      <button onClick={() => { setCounter(counter + 1) }}>ADD</button>
-    </div>
-  );
+  if (loading) {
+    return (<div>Loading...</div>)
+  } else {
+
+    return (
+      <div className={styles.container}>
+        {!user &&
+          <section className={styles.homebanner}>
+            <JoinUsBtn />
+          </section>}
+
+        <section className={styles.towSpinner}>
+          <h1>Team of the week</h1>
+          <Slider slides={images}></Slider>
+        </section>
+      </div>
+    )
+  }
 };
 
 export default Home;
