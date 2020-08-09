@@ -4,6 +4,7 @@ import Home from './views/Home/Home'
 import Login from './views/Login/Login'
 import Register from './views/Register/Register'
 import CreateTeam from './views/CreateTeam/CreateTeam'
+import TeamDetails from './views/TeamDetails/TeamDetails'
 import ErrorPage from './views/ErrorPage/ErrorPage'
 
 const Routes = (props) => {
@@ -30,7 +31,7 @@ const Routes = (props) => {
             }
         }
         createTeamGuardFn();
-    }, [])
+    }, [user])
 
     return (
         <Switch>
@@ -51,6 +52,9 @@ const Routes = (props) => {
                 }
             }
             } />
+
+            <Route path="/team-details/:id" exact component={TeamDetails} />
+
 
             <Route component={ErrorPage} />
         </Switch>

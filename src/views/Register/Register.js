@@ -91,6 +91,7 @@ class Register extends Component {
         e.preventDefault()
         auth.createUserWithEmailAndPassword(this.state.email, this.state.password)
             .then(data => {
+                console.log('Successfull Register');
                 this.props.history.push('/create-team')
             })
             .catch(err => {

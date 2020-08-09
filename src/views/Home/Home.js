@@ -3,14 +3,14 @@ import styles from './home.module.scss'
 import { UserContext } from '../../UserProvider'
 import JoinUsBtn from '../../components/JoinUsBtn/JoinUsBtn'
 import Slider from '../../components/Slider/Slider'
-import images from '../../components/Slider/slides'
+import TeamsRibbon from '../../components/TeamsRibbon/TeamsRibbon'
 // import getAllPlayers from '../../utils/getAllPlayers';
 import calculateDreamTeam from '../../utils/calculateDreamTeam'
 
 const Home = () => {
   const user = useContext(UserContext)
   const [loading, setLoading] = useState(true)
-  const [dreamTeam, setDreamTeam] = useState(null) 
+  const [dreamTeam, setDreamTeam] = useState(null)
 
   useEffect(() => {
     setLoading(false)
@@ -26,14 +26,24 @@ const Home = () => {
 
     return (
       <div className={styles.container}>
+        <section className={[styles.teamsribbon, 'sha'].join(' ')}>
+          <TeamsRibbon></TeamsRibbon>
+        </section>
         {!user && !dreamTeam && <div>Loading...</div>}
         {!user && dreamTeam &&
           <Fragment>
-            <section className={styles.teamsribbon}></section>
             <section className={styles.homebanner}>
               <JoinUsBtn />
             </section>
-            <section className={[styles.dreamteamspinner,'sha'].join(' ')}>
+            <section className={[styles.dreamteamspinner, 'sha'].join(' ')}>
+              <h1 className="up">Dream team so far!</h1>
+              <Slider slides={dreamTeam}></Slider>
+            </section>
+          </Fragment>
+        }
+        {user && dreamTeam &&
+          <Fragment>
+            <section className={[styles.dreamteamspinner, 'sha'].join(' ')}>
               <h1 className="up">Dream team so far!</h1>
               <Slider slides={dreamTeam}></Slider>
             </section>

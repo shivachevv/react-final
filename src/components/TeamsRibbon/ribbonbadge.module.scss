@@ -1,0 +1,17 @@
+.link {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: inherit;
+
+    img {
+        height: 70%;
+        transition: all 0.3s;
+
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
+}

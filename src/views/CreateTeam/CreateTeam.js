@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { UserContext } from '../../UserProvider'
 import Input from '../../components/Input/Input'
 import Badge from '../../components/Badge/Badge'
@@ -95,8 +96,8 @@ class CreateTeam extends Component {
     handleSubmitTeam = (e) => {
         e.preventDefault()
         const { isTeamFull, teamName, teamLogo, userTeam } = this.state
-        const { teamLogoErr, teamNameErr, teamUniqueNameErr } = this.state.errors
-        if (isTeamFull && !teamLogoErr && !teamNameErr && !teamUniqueNameErr) {
+        const { teamLogoErr, teamNameErr, teamUniqueName } = this.state.errors
+        if (isTeamFull && !teamLogoErr && !teamNameErr && !teamUniqueName) {
             console.log("TEAM IS SENT");
             const payload = {
                 teamName,
@@ -117,6 +118,7 @@ class CreateTeam extends Component {
                 .then(response => response.json())
                 .then(data => {
                     console.log('Success:', data);
+                    this.props.history.push('/')
                 })
                 .catch((error) => {
                     console.error('Error:', error);
@@ -245,4 +247,4 @@ class CreateTeam extends Component {
     }
 }
 
-export default CreateTeam;
+export default withRouter(CreateTeam);
