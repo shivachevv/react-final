@@ -5,19 +5,19 @@ import JoinUsBtn from '../../components/JoinUsBtn/JoinUsBtn'
 import Slider from '../../components/Slider/Slider'
 import images from '../../components/Slider/slides'
 // import getAllPlayers from '../../utils/getAllPlayers';
-import calculateTow from '../../utils/calculateTow'
+import calculateDreamTeam from '../../utils/calculateDreamTeam'
 
 const Home = () => {
   const user = useContext(UserContext)
   const [loading, setLoading] = useState(true)
-  const [tow, setTow] = useState(null) // TOW => Team Of the Week
+  const [dreamTeam, setDreamTeam] = useState(null) 
 
   useEffect(() => {
     setLoading(false)
   }, [user])
 
   useEffect(() => {
-    calculateTow().then(data => setTow(data))
+    calculateDreamTeam().then(data => setDreamTeam(data))
   }, [])
 
   if (loading) {
@@ -26,15 +26,16 @@ const Home = () => {
 
     return (
       <div className={styles.container}>
-        {!user && !tow && <div>Loading...</div>}
-        {!user && tow &&
+        {!user && !dreamTeam && <div>Loading...</div>}
+        {!user && dreamTeam &&
           <Fragment>
+            <section className={styles.teamsribbon}></section>
             <section className={styles.homebanner}>
               <JoinUsBtn />
             </section>
-            <section className={styles.towSpinner}>
-              <h1>Team of the week</h1>
-              <Slider slides={tow}></Slider>
+            <section className={[styles.dreamteamspinner,'sha'].join(' ')}>
+              <h1 className="up">Dream team so far!</h1>
+              <Slider slides={dreamTeam}></Slider>
             </section>
           </Fragment>
         }

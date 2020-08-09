@@ -2,24 +2,17 @@ import React, { useState, useEffect } from 'react';
 import SliderContent from './SliderContent'
 import Slide from './Slide'
 import Arrow from './Arrow'
+import styles from './slider.module.scss'
 
 function Slider({slides}) {
 
-    const getWidth = () => window.innerWidth
+    const getWidth = () => window.innerWidth / 4
     const [translate, setTranslate] = useState(0)
     const [transition, setTransition] = useState(0.45)
     const [activeSlide, setActiveSlide] = useState(0)
     const [containerWidth, setContainerWidth] = useState(0)
 
     const slidesCount = slides.length
-
-    const containerStyle = {
-        position: 'relative',
-        margin: '0 auto',
-        overflow: 'hidden',
-        height: '100%',
-        width: '100%',
-    }
 
     useEffect(() => {
         setContainerWidth(getWidth() * slidesCount)
@@ -54,14 +47,14 @@ function Slider({slides}) {
     })
 
     return (
-        <div style={containerStyle}>
+        <div className={styles.container}>
             <SliderContent
                 translate={translate}
                 transition={transition}
                 width={containerWidth}
             >
                 {slides.map(slide => {
-                    return <Slide key={slide} content={slide} width={getWidth()} />
+                    return <Slide key={slide.name} content={slide} width={getWidth()} />
                 })}
             </SliderContent>
 

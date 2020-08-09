@@ -1,6 +1,6 @@
 import getAllPlayers from './getAllPlayers'
 
-const calculateTow = async () => {
+const calculateDreamTeam = async () => {
     const players = await getAllPlayers()
 
     const sortPlayers = (arr) => {
@@ -43,4 +43,4 @@ const calculateTow = async () => {
     return towReady
 }
 
-export default calculateTow
+export default calculateDreamTeam
