@@ -41,10 +41,6 @@ class CreateTeam extends Component {
         })
     }
 
-    componentDidUpdate() {
-        console.log(this.state.user);
-    }
-
     updateIsTeamFull = () => {
         const isTeamFull = Object.keys(this.state.userTeam).length === 8
         return this.setState({
