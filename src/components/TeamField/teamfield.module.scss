@@ -1,0 +1,100 @@
+.container {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 20px 0 0 0;
+
+    .buttons {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+        padding: 0 0 20px 0;
+        border-bottom: 1px solid #3c474d;
+    }
+
+    .field {
+        width: 80%;
+        height: auto;
+        background-image: url('http://ff-legends.com/images/pitch1.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        margin: 20px 0 0 0;
+        padding: 20px 0 20px 0;
+        display: grid;
+        justify-content: center;
+        grid-column-gap: 10px;
+        grid-row-gap: 10px;
+        grid-template-columns: repeat(3, 20%);
+        grid-template-rows: repeat(4, 1fr);
+
+        .teammate {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+
+            img {
+                height: 60px;
+            }
+
+            div {
+                width: 100%;
+                border-radius: 5px;
+                overflow: hidden;
+
+                h3 {
+                    width: 100%;
+                    padding: 3px;
+                    text-align: center;
+                    color: #e9e9e9;
+                    background-color: #103e10ba;
+                }
+            }
+        }
+    }
+}
+
+.GK {
+    grid-row: 4 / span 1;
+    grid-column: 2 / span 1;
+}
+
+.DL {
+    grid-row: 3 / span 1;
+    grid-column: 1 / span 1;
+}
+
+.DC {
+    grid-row: 3 / span 1;
+    grid-column: 2 / span 1;
+}
+
+.DR {
+    grid-row: 3 / span 1;
+    grid-column: 3 / span 1;
+}
+
+.ML {
+    grid-row: 2 / span 1;
+    grid-column: 1 / span 1;
+}
+
+.MC {
+    grid-row: 2/ span 1;
+    grid-column: 2 / span 1;
+}
+
+.MR {
+    grid-row: 2 / span 1;
+    grid-column: 3 / span 1;
+}
+
+.ST {
+    grid-row: 1 / span 1;
+    grid-column: 2 / span 1;
+}

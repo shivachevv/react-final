@@ -26,9 +26,6 @@ const Home = () => {
 
     return (
       <div className={styles.container}>
-        <section className={[styles.teamsribbon, 'sha'].join(' ')}>
-          <TeamsRibbon></TeamsRibbon>
-        </section>
         {!user && !dreamTeam && <div>Loading...</div>}
         {!user && dreamTeam &&
           <Fragment>

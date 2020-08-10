@@ -1,0 +1,32 @@
+.container {
+    width: 80%;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #3c474d;
+    color: #f1f0f1;
+    font-size: 1.375rem;
+    position: relative;
+    padding: 0 120px 0 15px;
+    margin: 0 0 0 0;
+
+    &:before {
+        position: absolute;
+        content: '';
+        top: 25px;
+        left: 25px;
+        width: 5px;
+        height: 50px;
+        background-color: #9d5659;
+    }
+
+    h1 {
+        margin: 0 0 0 25px;
+    }
+
+    img {
+        height: 85%;
+    }
+}

@@ -7,13 +7,10 @@ import {
 } from 'react-router-dom'
 import UserProvider from './UserProvider'
 import Header from './components/Header/Header';
+import TeamsRibbon from './components/TeamsRibbon/TeamsRibbon';
 import Footer from './components/Footer/Footer';
 import Routes from './Routes'
 import { auth } from './firebase'
-// import Home from './Home'
-// import Login from './views/Login/Login'
-// import Register from './views/Register/Register'
-// import ErrorPage from './views/ErrorPage/ErrorPage'
 
 
 auth.onAuthStateChanged(user => {
@@ -23,6 +20,7 @@ auth.onAuthStateChanged(user => {
       <UserProvider>
         <Router>
           <Header></Header>
+          <TeamsRibbon></TeamsRibbon>
           <Routes user={user} />
           <Footer></Footer>
         </Router>
