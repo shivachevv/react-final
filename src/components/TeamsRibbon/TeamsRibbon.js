@@ -24,7 +24,7 @@ function TeamsRibbon(props) {
         <Fragment>
             {loading && <div>Loading...</div>}
             {!loading &&
-                <section className={styles.container}>
+                <section className={[styles.container,'sha'].join(' ')}>
                     {userTeams.map(team => {
                         return <RibbonBadge key={team.teamName} path={transformTeamName(team.teamName)} logo={team.teamLogo} />
                     })}

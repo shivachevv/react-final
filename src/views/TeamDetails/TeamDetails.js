@@ -16,24 +16,22 @@ function TeamDetails(props) {
     // GET USER ID FROM CONTEXT
     useEffect(() => {
         if (user && userTeam) {
-            // const changed = userTeam.email.split('@').map(x => {
-
-            // })
-            setIsEditAllowed(user.email === userTeam.email)
+            setIsEditAllowed(user.uid === userTeam.uid)
         }
     }, [user, userTeam])
+
     // GET TEAM ID FROM PARAMS
     useEffect(() => {
         setTeamId(props.match.params.id)
     }, [props.match.params.id])
+
     // GET TEAM DETAILS VIA TEAM ID
     useEffect(() => {
         getUserTeams().then(data => {
-            const [result] = Object.entries(data).filter(x => {
-                return x[1].teamName.split(' ').join('-').toLowerCase() === teamId
+            const [result] = Object.values(data).filter(x => {
+                return x.teamName.split(' ').join('-').toLowerCase() === teamId
             })
-            const [teamEmail, userTeam] = result
-            setUserTeam({ team: userTeam, email: teamEmail })
+            setUserTeam(result)
         })
     }, [teamId])
 
@@ -42,8 +40,8 @@ function TeamDetails(props) {
             {!userTeam && <div>Loading...</div>}
             {userTeam &&
                 <Fragment>
-                    <TeamHeader teamName={userTeam.team.teamName} teamLogo={userTeam.team.teamLogo} />
-                    <TeamField rounds={userTeam.team.rounds} />
+                    <TeamHeader teamName={userTeam.teamName} teamLogo={userTeam.teamLogo} />
+                    <TeamField rounds={userTeam.rounds} />
                     {isEditAllowed &&
                         <EditTeamBtn id={teamId} />
                     }

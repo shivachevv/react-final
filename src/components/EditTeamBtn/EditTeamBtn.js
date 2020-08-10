@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import styles from './editteambtn.module.scss'
 
 function EditTeamBtn({id}) {
     return (
-        <Link to={`edit-team/${id}`}>Edit Your Team!</Link>
+        <Link className={styles.link} to={`edit/${id}`}>Edit Your Team!</Link>
     );
 }
 

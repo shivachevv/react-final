@@ -1,5 +1,5 @@
 
-const defineLinks = (user) => {
+const defineLinks = (user, loggedId, logo) => {
     if (user) {
         return [
             {
@@ -11,8 +11,9 @@ const defineLinks = (user) => {
                 label: "Standings"
             },
             {
-                path: "/myteam/:id",
-                label: "My Team"
+                path: `/team-details/${loggedId}`,
+                label: "My Team",
+                logo: logo
             }
         ]
     } else {

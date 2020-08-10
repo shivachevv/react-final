@@ -95,7 +95,7 @@ class CreateTeam extends Component {
 
     handleSubmitTeam = (e) => {
         e.preventDefault()
-        const { isTeamFull, teamName, teamLogo, userTeam } = this.state
+        const { isTeamFull, teamName, teamLogo, userTeam, user } = this.state
         const { teamLogoErr, teamNameErr, teamUniqueName } = this.state.errors
         if (isTeamFull && !teamLogoErr && !teamNameErr && !teamUniqueName) {
             console.log("TEAM IS SENT");
@@ -104,7 +104,8 @@ class CreateTeam extends Component {
                 teamLogo,
                 rounds: {
                     r1: userTeam
-                }
+                },
+                uid: user.uid
             }
             const name = this.state.user.email.split('.').join('-')
             fetch(`https://softuni-react-final.firebaseio.com/users/${name}.json`, {
@@ -193,9 +194,9 @@ class CreateTeam extends Component {
             return (
                 <form onSubmit={this.handleSubmitTeam} className={styles.form}>
                     <h1 className={[styles.heading, 'up'].join(' ')}>Choose your team!</h1>
-                    <ErrorMsg error={teamNameErr} msg="Please select a name for your team!"/>
-                    <ErrorMsg error={teamUniqueNameErr} msg="This team name is already taken!"/>
-                    <ErrorMsg error={teamLogoErr} msg="Please add a logo URL for your team!"/>
+                    <ErrorMsg error={teamNameErr} msg="Please select a name for your team!" />
+                    <ErrorMsg error={teamUniqueNameErr} msg="This team name is already taken!" />
+                    <ErrorMsg error={teamLogoErr} msg="Please add a logo URL for your team!" />
 
                     <div className={styles.input}>
                         <Input error={teamNameErr || teamUniqueNameErr ? 'error' : ''} id="teamName" label="Team Name" onChange={this.changeHandlers.teamName} value={teamName} onBlur={this.blurHandlers.teamName}></Input>
@@ -205,7 +206,7 @@ class CreateTeam extends Component {
                     <div className={styles.myteamcontainer}>
                         <h3 className='up'>Your team!</h3>
 
-                        <ErrorMsg error={!isTeamFull} msg="Your team is not complete!"/>
+                        <ErrorMsg error={!isTeamFull} msg="Your team is not complete!" />
                         <div className={styles.myteam}>
                             {this.renderUserTeam()}
                         </div>
@@ -221,23 +222,25 @@ class CreateTeam extends Component {
                     <div className={styles.playerscontainer}>
                         {positions &&
                             positions.map(p => {
-                                const [positionName] = Object.keys(p)
-                                const playersArray = p[positionName]
-                                return (
-                                    <div className={styles[positionName]} key={positionName}>
-                                        <h3 className='up'>{positionName}</h3>
-                                        {playersArray.map(pl => {
-                                            return (
-                                                <a href="" onClick={this.addPlayerToTeam} data-position={positionName} key={pl.name}>
-                                                    {pl.name}
-                                                </a>
-                                            )
-                                        })}
-                                    </div>
-                                )
+                                if (p) {
+                                    const [positionName] = Object.keys(p)
+                                    const playersArray = p[positionName]
+                                    return (
+                                        <div className={styles[positionName]} key={positionName}>
+                                            <h3 className='up'>{positionName}</h3>
+                                            {playersArray.map(pl => {
+                                                return (
+                                                    <a href="" onClick={this.addPlayerToTeam} data-position={positionName} key={pl.name}>
+                                                        {pl.name}
+                                                    </a>
+                                                )
+                                            })}
+                                        </div>
+                                    )
+                                }
                             })}
                     </div>
-                    <ErrorMsg error={submitError} msg="You are missing something!"/>
+                    <ErrorMsg error={submitError} msg="You are missing something!" />
                     <SubmitBtn title="Create your team!" />
                 </form>
             );
