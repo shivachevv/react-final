@@ -12,7 +12,6 @@ import Footer from './components/Footer/Footer';
 import Routes from './Routes'
 import { auth } from './firebase'
 
-
 auth.onAuthStateChanged(user => {
 
   ReactDOM.render(
@@ -25,7 +24,6 @@ auth.onAuthStateChanged(user => {
           <Footer></Footer>
         </Router>
       </UserProvider>
-
     </React.StrictMode>,
     document.getElementById('root')
   );

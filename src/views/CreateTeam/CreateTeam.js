@@ -100,8 +100,8 @@ class CreateTeam extends Component {
         if (isTeamFull && !teamLogoErr && !teamNameErr && !teamUniqueName) {
             console.log("TEAM IS SENT");
             const payload = {
-                teamName,
-                teamLogo,
+                teamName: teamName.trim(),
+                teamLogo: teamLogo.trim(),
                 rounds: {
                     r1: userTeam
                 },

@@ -1,0 +1,147 @@
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    .roundcommand {
+        width: 99%;
+        margin: 20px 0 0 0;
+        display: flex;
+        justify-content: flex-start;
+        flex-direction: column;
+        align-items: center;
+
+        div button {
+            margin: 10px 20px;
+            padding: 5px 10px;
+        }
+    }
+
+    .selectclub {
+        width: 99%;
+        // margin: 10px 0 0 0;
+        display: flex;
+        justify-content: flex-start;
+        flex-direction: column;
+        align-items: center;
+
+        div {
+            width: 100%;
+            margin: 10px 0 0 0;
+            text-align: center;
+
+            a {
+                display: inline-block;
+            }
+        }
+    }
+
+    .clubdetails {
+        width: 99%;
+        display: flex;
+        justify-content: flex-start;
+        flex-direction: column;
+        align-items: center;
+
+        .positions {
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+            flex-direction: column;
+            align-items: flex-start;
+
+            .position {
+                width: 100%;
+                padding: 5px;
+
+                .names {
+                    width: 100%;
+                    display: flex;
+                    justify-content: flex-start;
+                    flex-direction: row;
+                    align-items: flex-start;
+                    flex-wrap: wrap;
+
+                    .name {
+                        width: 20%;
+                        display: flex;
+                        justify-content: flex-start;
+                        flex-direction: column;
+                        align-items: flex-start;
+                        margin: 5px 10px 10px 10px;
+                        padding: 5px 10px 5px 10px;
+                        background-color: #dadada;
+                        box-shadow: 2px 2px 6px -3px rgba(0, 0, 0, 0.75);
+                        border-radius: 5px;
+                        overflow: hidden;
+
+                        .points {
+                            width: 100%;
+                            margin: 10px 0 0 0;
+                            display: flex;
+                            justify-content: flex-start;
+                            flex-direction: column;
+                            align-items: center;
+
+                            form {
+                                width: 100%;
+                                display: flex;
+                                justify-content: center;
+                                flex-direction: row;
+                                align-items: center;
+
+                                label {
+                                    width: 50%;
+
+                                    .empty {
+                                        background-color: #ffc65e;
+                                    }
+
+                                    .withvalue {
+                                        background-color: lightgreen;
+                                    }
+
+                                    input {
+                                        width: 40px;
+                                        min-width: 40px;
+                                        margin: 5px 10px 5px 5px;
+                                        border: 1px solid grey;
+
+                                        &:focus {
+                                            border: 2px solid black;
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    h1 {
+        width: 100%;
+        font-weight: bold;
+        text-align: center;
+        padding: 10px 0;
+        border-bottom: 1px solid black;
+    }
+
+    h2 {
+        text-align: center;
+        width: 100%;
+        padding: 10px 0;
+        border-bottom: 1px solid black;
+    }
+
+    h3 {
+        text-align: center;
+        width: 100%;
+        padding: 5px 0;
+        border-bottom: 1px solid black;
+    }
+}

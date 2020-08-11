@@ -13,7 +13,7 @@ function Input({ id, label, value, onChange, onBlur, error }) {
     return (
         <div >
             {/* <label htmlFor={id}>{label}</label> */}
-            <input className={error ? styles.error : ''} id={id} value={value} name={id} onChange={changeHandler} onBlur={blurHandler} placeholder={label}></input>
+            <input className={[error ? styles.error : '', styles.input].join(' ')} id={id} value={value} name={id} onChange={changeHandler} onBlur={blurHandler} placeholder={label}></input>
         </div>
     );
 }

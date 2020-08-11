@@ -25,7 +25,7 @@ const calculateDreamTeam = async () => {
                         tow[pos] = []
                     }
                     c[pos].map(d => {
-                        result[team][pos][d.name] = d
+                        result[team][pos][d.name.split('.').join('_')] = d
                         if (d.total) {
                             tow[pos].push(d)
                         }
@@ -39,7 +39,6 @@ const calculateDreamTeam = async () => {
     const towReady = positions.map(position => {
         return sortPlayers(tow[position])[0]
     })
-
     return towReady
 }
 

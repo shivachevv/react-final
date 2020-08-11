@@ -89,10 +89,29 @@ class Register extends Component {
 
     handleRegister = e => {
         e.preventDefault()
+        
         auth.createUserWithEmailAndPassword(this.state.email, this.state.password)
             .then(data => {
-                console.log('Successfull Register');
-                this.props.history.push('/create-team')
+                
+                const payload = {
+                    uid: data.user.uid
+                }
+                console.log(data)
+                const name = this.state.email.split('.').join('-')
+                fetch(`https://softuni-react-final.firebaseio.com/users/${name}.json`, {
+                    method: 'PATCH',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload),
+                }).then(res => {
+                    console.log('Successfull Register', res);
+                    this.props.history.push('/create-team')
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
             })
             .catch(err => {
                 this.editErrors('apiErr', true)

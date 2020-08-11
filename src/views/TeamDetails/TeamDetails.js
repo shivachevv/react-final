@@ -17,6 +17,8 @@ function TeamDetails(props) {
     useEffect(() => {
         if (user && userTeam) {
             setIsEditAllowed(user.uid === userTeam.uid)
+        } else {
+            setIsEditAllowed(false)
         }
     }, [user, userTeam])
 
@@ -29,7 +31,9 @@ function TeamDetails(props) {
     useEffect(() => {
         getUserTeams().then(data => {
             const [result] = Object.values(data).filter(x => {
-                return x.teamName.split(' ').join('-').toLowerCase() === teamId
+                if (x.teamName) {
+                    return x.teamName.split(' ').join('-').toLowerCase() === teamId
+                }
             })
             setUserTeam(result)
         })
