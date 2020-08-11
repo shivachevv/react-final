@@ -5,6 +5,8 @@ import Input from '../../components/Input/Input'
 import Badge from '../../components/Badge/Badge'
 import SubmitBtn from '../../components/SubmitBtn/SubmitBtn'
 import ErrorMsg from '../../components/ErrorMsg/ErrorMsg'
+import Loading from '../../components/Loading/Loading'
+
 
 import styles from './createteam.module.scss'
 
@@ -245,7 +247,8 @@ class CreateTeam extends Component {
                 </form>
             );
         } else {
-            return (<div>Loading...</div>)
+            return <Loading /> 
+
         }
     }
 }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Redirect, Route, Switch, useHistory, withRouter } from 'react-router-dom'
+import Loading from './components/Loading/Loading'
 import Home from './views/Home/Home'
 import Login from './views/Login/Login'
 import Register from './views/Register/Register'
@@ -111,7 +112,7 @@ const Routes = (props) => {
             <Route path="/create-team" exact render={() => {
                 if (createTeamLoading) {
                     console.log('final check1')
-                    return <div>Loading...</div>
+                    return <Loading />
                 } else {
                     console.log('final check1')
 
@@ -127,7 +128,7 @@ const Routes = (props) => {
             } />
             <Route path="/admin" exact render={() => {
                 if (adminLoading) {
-                    return <div>Loading...</div>
+                    return <Loading />
                 } else {
                     return adminGuard ? <AdminPanel /> : <Redirect to="/" />
                 }

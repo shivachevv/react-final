@@ -6,6 +6,7 @@ import TeamHeader from '../../components/TeamHeader/TeamHeader';
 import TeamField from '../../components/TeamField/TeamField';
 import EditTeamBtn from '../../components/EditTeamBtn/EditTeamBtn';
 import { UserContext } from '../../UserProvider'
+import Loading from '../../components/Loading/Loading'
 
 function TeamDetails(props) {
     const user = useContext(UserContext)
@@ -41,7 +42,7 @@ function TeamDetails(props) {
 
     return (
         <div className={styles.container}>
-            {!userTeam && <div>Loading...</div>}
+            {!userTeam && <Loading />}
             {userTeam &&
                 <Fragment>
                     <TeamHeader teamName={userTeam.teamName} teamLogo={userTeam.teamLogo} />

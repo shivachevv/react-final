@@ -6,6 +6,8 @@ import Slider from '../../components/Slider/Slider'
 import TeamsRibbon from '../../components/TeamsRibbon/TeamsRibbon'
 // import getAllPlayers from '../../utils/getAllPlayers';
 import calculateDreamTeam from '../../utils/calculateDreamTeam'
+import Loading from '../../components/Loading/Loading'
+
 
 const Home = () => {
   const user = useContext(UserContext)
@@ -21,12 +23,12 @@ const Home = () => {
   }, [])
 
   if (loading) {
-    return (<div>Loading...</div>)
+    return <Loading />
   } else {
 
     return (
       <div className={styles.container}>
-        {!user && !dreamTeam && <div>Loading...</div>}
+        {!user && !dreamTeam && <Loading />}
         {!user && dreamTeam &&
           <Fragment>
             <section className={styles.homebanner}>

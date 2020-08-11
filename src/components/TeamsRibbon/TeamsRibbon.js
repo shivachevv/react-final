@@ -2,6 +2,7 @@ import React, { useState, useEffect, Fragment } from 'react';
 import getUserTeams from '../../utils/getUserTeams';
 import RibbonBadge from './RibbonBadge';
 import styles from './teamsribbon.module.scss'
+import Loading from '../../components/Loading/Loading'
 
 
 function TeamsRibbon(props) {
@@ -22,7 +23,7 @@ function TeamsRibbon(props) {
 
     return (
         <Fragment>
-            {loading && <div>Loading...</div>}
+            {loading && <Loading />}
             {!loading &&
                 <section className={[styles.container, 'sha'].join(' ')}>
                     {userTeams.map(team => {
