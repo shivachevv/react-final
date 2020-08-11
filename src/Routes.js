@@ -15,7 +15,10 @@ const Routes = (props) => {
     const user = props.user
     const [createTeamGuard, setCreateTeamGuard] = useState(true)
     const [editTeamGuard, setEditTeamGuard] = useState(true)
-    const [isLoading, setIsLoading] = useState(true)
+    const [adminGuard, setAdminGuard] = useState(false)
+
+    const [adminLoading, setAdminLoading] = useState(true)
+    const [createTeamLoading, setCreateTeamLoading] = useState(true)
 
     // CREATE TEAM GUARD
     useEffect(() => {
@@ -32,22 +35,22 @@ const Routes = (props) => {
                     console.log('register check4')
 
                     setCreateTeamGuard(false)
-                    setIsLoading(false)
+                    setCreateTeamLoading(false)
                 } else if (data && !data.teamName) {
                     console.log('register check5')
                     setCreateTeamGuard(false)
-                    setIsLoading(false)
+                    setCreateTeamLoading(false)
                 }
                 else {
                     console.log('register check6')
 
                     setCreateTeamGuard(true)
-                    setIsLoading(false)
+                    setCreateTeamLoading(false)
                 }
             } else {
                 console.log('register check7')
                 setCreateTeamGuard(true)
-                setIsLoading(false)
+                setCreateTeamLoading(false)
             }
         }
         createTeamGuardFn();
@@ -72,6 +75,28 @@ const Routes = (props) => {
         return () => ac.abort()
     }, [history, user])
 
+    // ADMIN PANEL GUARD 
+    useEffect(() => {
+        if (user) {
+            getUserTeams().then(teams => {
+                const [team] = Object.values(teams).filter(x => {
+                    if (x.uid) {
+                        return x.uid === user.uid
+                    }
+                })
+
+                if (team) {
+                    setAdminGuard(team.isAdmin)
+                    setAdminLoading(false)
+                }
+
+            })
+        } else {
+            setAdminGuard(false)
+            setAdminLoading(false)
+        }
+    }, [user])
+
     return (
         <Switch>
             <Route path="/" exact component={Home} />
@@ -84,7 +109,7 @@ const Routes = (props) => {
             }
             } />
             <Route path="/create-team" exact render={() => {
-                if (isLoading) {
+                if (createTeamLoading) {
                     console.log('final check1')
                     return <div>Loading...</div>
                 } else {
@@ -100,8 +125,15 @@ const Routes = (props) => {
                 return editTeamGuard ? <EditTeam /> : <Redirect to="/" />
             }
             } />
+            <Route path="/admin" exact render={() => {
+                if (adminLoading) {
+                    return <div>Loading...</div>
+                } else {
+                    return adminGuard ? <AdminPanel /> : <Redirect to="/" />
+                }
+            }
+            } />
 
-            <Route path="/admin" exact component={AdminPanel} />
 
             <Route component={ErrorPage} />
         </Switch>

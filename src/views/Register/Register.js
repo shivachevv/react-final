@@ -94,9 +94,9 @@ class Register extends Component {
             .then(data => {
                 
                 const payload = {
-                    uid: data.user.uid
+                    uid: data.user.uid,
+                    isAdmin: false
                 }
-                console.log(data)
                 const name = this.state.email.split('.').join('-')
                 fetch(`https://softuni-react-final.firebaseio.com/users/${name}.json`, {
                     method: 'PATCH',
