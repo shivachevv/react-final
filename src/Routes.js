@@ -20,6 +20,7 @@ const Routes = (props) => {
 
     const [adminLoading, setAdminLoading] = useState(true)
     const [createTeamLoading, setCreateTeamLoading] = useState(true)
+    const [editTeamLoading, setEditTeamLoading] = useState(true)
 
     // CREATE TEAM GUARD
     useEffect(() => {
@@ -58,22 +59,42 @@ const Routes = (props) => {
 
     // EDIT TEAM GUARD
     useEffect(() => {
+        console.log('editteam1', history);
+
+
         const ac = new AbortController()
         const path = history.location.pathname
         const pathTeam = path.includes('edit') ? path.split('/')[3] : ''
         if (user) {
+            console.log('editteam2');
+
             getUserTeams().then(teams => {
+                console.log('editteam3');
+
                 const [team] = Object.values(teams).filter(x => {
+                    console.log('editteam4');
+
                     if (x.teamName) {
                         let modified = x.teamName.toLowerCase().split(' ').join('-')
                         return modified === pathTeam
                     }
                 })
-                if (team) { setEditTeamGuard(team.uid === user.uid) }
+                if (team) {
+                    console.log('editteam5');
+
+                    setEditTeamGuard(team.uid === user.uid)
+                    setEditTeamLoading(false)
+                }
+                else {
+                    console.log('editteam6');
+
+                    setEditTeamGuard(false)
+                    setEditTeamLoading(false)
+                }
             })
         }
         return () => ac.abort()
-    }, [history, user])
+    }, [history])
 
     // ADMIN PANEL GUARD 
     useEffect(() => {
@@ -94,6 +115,7 @@ const Routes = (props) => {
             setAdminLoading(false)
         }
     }, [user])
+
 
     return (
         <Switch>
@@ -119,8 +141,16 @@ const Routes = (props) => {
             } />
             <Route path="/team-details/:id" exact component={TeamDetails} />
             <Route path="/team-details/edit/:id" exact render={() => {
-                return editTeamGuard ? <EditTeam /> : <Redirect to="/" />
+                
+                if (editTeamLoading) {
+                    console.log('final check2')
+                    return <Loading />
+                } else {
+                    console.log('final check3')
+                    return editTeamGuard ? <EditTeam /> : <Redirect to="/" />
+                }
             }
+
             } />
             <Route path="/admin" exact render={() => {
                 if (adminLoading) {

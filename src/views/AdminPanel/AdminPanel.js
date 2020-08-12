@@ -4,6 +4,7 @@ import getAllPlayersPts from '../../utils/getAllPlayersPts'
 import { getRounds, addRound } from '../../utils/getRounds'
 import Badge from '../../components/Badge/Badge'
 import Loading from '../../components/Loading/Loading'
+import changePageTitle from '../../utils/changePageTitle'
 
 
 const API_POINTS_URL = 'https://softuni-react-final.firebaseio.com/allPlayersPts'
@@ -16,6 +17,7 @@ function AdminPanel(props) {
     const [rounds, setRounds] = useState(null)
 
     useEffect(() => {
+        changePageTitle("Admin Panel")
         getAllPlayersPts().then(data => setPlayers(data)).catch(e => console.log(e))
     }, [players, updatePlayersFlag])
     useEffect(() => {

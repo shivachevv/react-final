@@ -7,6 +7,7 @@ import TeamsRibbon from '../../components/TeamsRibbon/TeamsRibbon'
 // import getAllPlayers from '../../utils/getAllPlayers';
 import calculateDreamTeam from '../../utils/calculateDreamTeam'
 import Loading from '../../components/Loading/Loading'
+import changePageTitle from '../../utils/changePageTitle'
 
 
 const Home = () => {
@@ -17,10 +18,11 @@ const Home = () => {
   useEffect(() => {
     setLoading(false)
   }, [user])
-
+  
   useEffect(() => {
     const ac = new AbortController()
-
+    
+    changePageTitle("FFL Home!")
     calculateDreamTeam().then(data => setDreamTeam(data))
     return () => ac.abort()
   }, [])

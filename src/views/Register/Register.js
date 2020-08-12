@@ -4,6 +4,7 @@ import styles from './register.module.scss'
 import Input from '../../components/Input/Input'
 import SubmitBtn from '../../components/SubmitBtn/SubmitBtn'
 import { auth } from '../../firebase'
+import changePageTitle from '../../utils/changePageTitle'
 
 class Register extends Component {
     constructor(props) {
@@ -28,8 +29,8 @@ class Register extends Component {
         }
     }
 
-    componentDidMount = () => {
-
+    componentWillMount = () => {
+        changePageTitle("Register!")
     };
 
     changeHandlers = {

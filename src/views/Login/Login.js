@@ -5,6 +5,7 @@ import SubmitBtn from '../../components/SubmitBtn/SubmitBtn'
 import { auth } from '../../firebase'
 import { UserContext } from '../../UserProvider'
 import { withRouter } from 'react-router-dom'
+import changePageTitle from '../../utils/changePageTitle'
 
 
 class Login extends Component {
@@ -25,6 +26,10 @@ class Login extends Component {
                 apiErr: '',
             }
         }
+    }
+
+    componentWillMount(){
+        changePageTitle("Login!")
     }
 
     static contextType = UserContext

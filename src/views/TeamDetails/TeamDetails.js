@@ -7,6 +7,7 @@ import TeamField from '../../components/TeamField/TeamField';
 import EditTeamBtn from '../../components/EditTeamBtn/EditTeamBtn';
 import { UserContext } from '../../UserProvider'
 import Loading from '../../components/Loading/Loading'
+import changePageTitle from '../../utils/changePageTitle'
 
 function TeamDetails(props) {
     const user = useContext(UserContext)
@@ -16,8 +17,11 @@ function TeamDetails(props) {
 
     // GET USER ID FROM CONTEXT
     useEffect(() => {
+        changePageTitle("Team page")
+        
         if (user && userTeam) {
             setIsEditAllowed(user.uid === userTeam.uid)
+            changePageTitle(`${userTeam.teamName}: Team page`)
         } else {
             setIsEditAllowed(false)
         }

@@ -6,6 +6,7 @@ import Badge from '../../components/Badge/Badge'
 import SubmitBtn from '../../components/SubmitBtn/SubmitBtn'
 import ErrorMsg from '../../components/ErrorMsg/ErrorMsg'
 import Loading from '../../components/Loading/Loading'
+import changePageTitle from '../../utils/changePageTitle'
 
 
 import styles from './createteam.module.scss'
@@ -36,6 +37,8 @@ class CreateTeam extends Component {
 
 
     async componentDidMount() {
+        changePageTitle("Create your team!")
+
         const response = await fetch('https://softuni-react-final.firebaseio.com/allPlayersData.json')
         const data = await response.json()
         this.setState({

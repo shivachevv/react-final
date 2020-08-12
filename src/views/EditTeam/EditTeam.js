@@ -9,6 +9,7 @@ import Loading from '../../components/Loading/Loading'
 import getUserTeams from '../../utils/getUserTeams'
 import getAllPlayers from '../../utils/getAllPlayers'
 import { getRounds } from '../../utils/getRounds'
+import changePageTitle from '../../utils/changePageTitle'
 
 import styles from './editteam.module.scss'
 
@@ -41,6 +42,7 @@ class EditTeam extends Component {
 
 
     componentDidMount() {
+        changePageTitle("Edit Team")
         getAllPlayers().then(data => this.setState({ players: data.data }))
         
         getUserTeams().then(data => {
@@ -280,7 +282,7 @@ class EditTeam extends Component {
                             })}
                     </div>
                     <ErrorMsg error={submitError} msg="You are missing something!" />
-                    <SubmitBtn title="Create your team!" />
+                    <SubmitBtn title="Edit your team!" />
                 </form>
             );
         } else {
