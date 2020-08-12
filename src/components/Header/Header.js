@@ -22,16 +22,16 @@ function Header(props) {
                 const [result] = Object.values(data).filter(x => {
                     return x.uid === user.uid
                 })
-                console.log('header1', result)
+                // console.log('header1', result)
                 if (result && result.teamLogo && result.teamName) {
-                    console.log('header2', result)
+                    // console.log('header2', result)
 
                     setLoggedLogo(result.teamLogo)
                     setLoggedId(result.teamName.toLowerCase().split(' ').join('-'))
                 }
             })
         } else {
-            console.log('else header')
+            // console.log('else header')
         }
         return () => ac.abort()
     }, [user])

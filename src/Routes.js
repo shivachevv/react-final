@@ -31,7 +31,6 @@ const Routes = (props) => {
                 const endpoint = user.email.split('.').join('-')
                 const response = await fetch(`https://softuni-react-final.firebaseio.com/users/${endpoint}.json`)
                 const data = await response.json()
-                console.log(`https://softuni-react-final.firebaseio.com/users/${endpoint}.json`, data)
                 if (!data) {
                     console.log('register check4')
 

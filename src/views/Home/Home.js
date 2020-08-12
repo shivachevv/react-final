@@ -19,7 +19,10 @@ const Home = () => {
   }, [user])
 
   useEffect(() => {
+    const ac = new AbortController()
+
     calculateDreamTeam().then(data => setDreamTeam(data))
+    return () => ac.abort()
   }, [])
 
   if (loading) {

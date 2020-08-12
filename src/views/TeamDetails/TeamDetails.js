@@ -46,7 +46,7 @@ function TeamDetails(props) {
             {userTeam &&
                 <Fragment>
                     <TeamHeader teamName={userTeam.teamName} teamLogo={userTeam.teamLogo} />
-                    <TeamField rounds={userTeam.rounds} />
+                    <TeamField teamsPerRnd={userTeam.rounds} />
                     {isEditAllowed &&
                         <EditTeamBtn id={teamId} />
                     }

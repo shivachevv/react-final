@@ -28,7 +28,6 @@ const calculateDreamTeam = async () => {
     }
 
     let result = {}
-    let tow = {}
     let positions = ['gk', 'dl', 'dc', 'dr', 'ml', 'mc', 'mr', 'st']
 
     Object.keys(players).forEach(x => {
