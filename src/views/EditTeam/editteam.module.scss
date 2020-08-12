@@ -1,0 +1,188 @@
+
+.form {
+    width: 100%;
+    padding: 20px 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    .heading {
+        width: 40%;
+        text-align: center;
+        font-size: 1.3rem;
+        background-color: #924243;
+        color: #e9e9e9;
+        padding: 20px 80px;
+        border-radius: 10px;
+    }
+
+    .input {
+        width: 40%;
+        margin: 20px 0;
+
+        div:first-child {
+            margin: 10px 0;
+        }
+    }
+
+    .myteamcontainer {
+        width: 90%;
+
+
+        h3:first-child {
+            width: 100%;
+            font-size: 1.2rem;
+            text-align: center;
+            background-color: #066d00;
+            color: #e9e9e9;
+            border-bottom: 3px solid #232f37;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .myteam {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            grid-row-gap: 10px;
+            justify-items: center;
+            margin: 20px 0 0 0;
+            padding: 10px;
+
+
+
+            .player {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                width: 90%;
+                border-radius: 5px;
+                overflow: hidden;
+
+                span:first-child {
+                    text-align: center;
+                    font-size: 1.2rem;
+                    width: 100%;
+                    border-bottom: 2px solid black;
+                    padding: 5px 0;
+                }
+
+                span:nth-child(2) {
+                    text-align: center;
+                    width: 100%;
+                    height: 30px;
+                    padding: 5px 0;
+                    font-size: 1.2rem;
+                    background-color: #cecece;
+                }
+
+                .spanfull {
+                    background-color: #7bc877 !important;
+                }
+            }
+        }
+    }
+
+    .logos {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin: 20px 0 0 0;
+    }
+
+    .playerscontainer {
+        width: 100%;
+        margin: 20px 0 20px 0;
+        padding: 20px 0 0 0;
+        border-top: 1px solid black;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(4, auto);
+        grid-row-gap: 20px;
+        grid-column-gap: 20px;
+        justify-items: center;
+
+        div {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.75);
+            transition: all 0.2s;
+            overflow: hidden;
+
+            &:hover {
+                box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+
+            }
+
+            h3 {
+                text-align: center;
+                font-size: 1.3rem;
+                width: 100%;
+                border-bottom: 2px solid black;
+                background-color: #7bc877;
+                padding: 10px 0;
+            }
+
+            a {
+                width: 100%;
+                display: inline-block;
+                text-decoration: none;
+                color: black;
+                text-align: center;
+                transition: all 0.2s;
+                padding: 5px;
+
+                &:hover {
+                    background-color: #7bc877;
+                    text-transform: uppercase;
+                }
+            }
+        }
+
+    }
+}
+
+.st {
+    grid-row: 1 / span 1;
+    grid-column: 2 / span 1;
+}
+
+.ml {
+    grid-row: 2 / span 1;
+    grid-column: 1 / span 1;
+}
+
+.mc {
+    grid-row: 2 / span 1;
+    grid-column: 2 / span 1;
+}
+
+.mr {
+    grid-row: 2 / span 1;
+    grid-column: 3 / span 1;
+}
+
+.dl {
+    grid-row: 3 / span 1;
+    grid-column: 1 / span 1;
+}
+
+.dc {
+    grid-row: 3 / span 1;
+    grid-column: 2 / span 1;
+}
+
+.dr {
+    grid-row: 3 / span 1;
+    grid-column: 3/ span 1;
+}
+
+.gk {
+    grid-row: 4 / span 1;
+    grid-column: 2 / span 1;
+}

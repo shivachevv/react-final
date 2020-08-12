@@ -84,12 +84,10 @@ const Routes = (props) => {
                         return x.uid === user.uid
                     }
                 })
-
                 if (team) {
                     setAdminGuard(team.isAdmin)
                     setAdminLoading(false)
                 }
-
             })
         } else {
             setAdminGuard(false)
@@ -121,7 +119,6 @@ const Routes = (props) => {
             } />
             <Route path="/team-details/:id" exact component={TeamDetails} />
             <Route path="/team-details/edit/:id" exact render={() => {
-                console.log(editTeamGuard);
                 return editTeamGuard ? <EditTeam /> : <Redirect to="/" />
             }
             } />
