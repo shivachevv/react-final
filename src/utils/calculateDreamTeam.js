@@ -1,44 +1,51 @@
-import getAllPlayers from './getAllPlayers'
+import getAllPlayersPts from './getAllPlayersPts'
 
 const calculateDreamTeam = async () => {
-    const players = await getAllPlayers()
+    const players = await getAllPlayersPts()
 
-    const sortPlayers = (arr) => {
-        return arr.sort((a, b) => {
-            return b.total - a.total
+
+    const calcTotalPerPlayer = (player) => {
+        let sum = 0
+        player.rounds.forEach((round, i) => {
+            if (i > 0) {
+                sum += Number(round.pts)
+            }
         })
+        return sum
+    }
+
+
+    const sortPlayers = (obj, pos) => {
+        let temp = { ...obj }
+        Object.values(temp).forEach(player => {
+            player["total"] = calcTotalPerPlayer(player)
+        })
+
+        const sorted = Object.values(temp).sort((x, y) => {
+            return y.total - x.total
+        })
+        return sorted
     }
 
     let result = {}
     let tow = {}
     let positions = ['gk', 'dl', 'dc', 'dr', 'ml', 'mc', 'mr', 'st']
 
-    const individualPlayers = players.data.map((a, i) => {
-        const [team] = Object.keys(a)
-        result[team] = {}
-        Object.values(a).map(b => {
-            Object.values(b).map(c => {
-                if (c) {
-                    const [pos] = Object.keys(c)
-                    result[team][pos] = {}
-                    if (!tow[pos]) {
-                        tow[pos] = []
-                    }
-                    c[pos].map(d => {
-                        result[team][pos][d.name.split('.').join('_')] = d
-                        if (d.total) {
-                            tow[pos].push(d)
-                        }
-                    })
-                }
-            })
+    Object.keys(players).forEach(x => {
+        Object.keys(players[x]).forEach(y => {
+            if (result[y]) {
+                result[y] = { ...result[y], ...players[x][y] }
+            } else {
+                result[y] = {}
+                result[y] = { ...result[y], ...players[x][y] }
+            }
         })
-
-    })
+    });
 
     const towReady = positions.map(position => {
-        return sortPlayers(tow[position])[0]
+        return sortPlayers(result[position], position)[0]
     })
+
     return towReady
 }
 
