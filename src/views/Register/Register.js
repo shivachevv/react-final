@@ -143,8 +143,8 @@ class Register extends Component {
                     {apiErr ? (<h3 className={styles.error}>{this.state.errMsgs.apiErr}</h3>) : ''}
 
                     <Input error={emailErr ? 'error' : ''} id="email" label="Email" onChange={this.changeHandlers.email} value={email} onBlur={this.blurHandlers.email}></Input>
-                    <Input error={passErr ? 'error' : ''} id="password" label="Password" onChange={this.changeHandlers.password} value={password} onBlur={this.blurHandlers.password}></Input>
-                    <Input error={rePassErr ? 'error' : ''} id="rePassword" label="Repeat Password" onChange={this.changeHandlers.rePassword} value={rePassword} onBlur={this.blurHandlers.rePassword}></Input>
+                    <Input error={passErr ? 'error' : ''} type="password" id="password" label="Password" onChange={this.changeHandlers.password} value={password} onBlur={this.blurHandlers.password}></Input>
+                    <Input error={rePassErr ? 'error' : ''} type="password" id="rePassword" label="Repeat Password" onChange={this.changeHandlers.rePassword} value={rePassword} onBlur={this.blurHandlers.rePassword}></Input>
 
                     <SubmitBtn title="Register" />
                 </form>

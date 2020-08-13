@@ -100,7 +100,7 @@ const Routes = (props) => {
             } />
             <Route path="/team-details/:id" exact component={TeamDetails} />
            
-            <EditTeamGuard path="/edit-team/:id" component={EditTeam} />
+            <EditTeamGuard path="/edit-team/:id" component={EditTeam} user={user}/>
 
             <Route path="/admin" exact render={() => {
                 if (adminLoading) {

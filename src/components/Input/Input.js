@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './input.module.scss'
 
-function Input({ id, label, value, onChange, onBlur, error }) {
+function Input({ id, label, value, onChange, onBlur, error, type }) {
 
     const changeHandler = (e) => {
         return onChange(e.target.value)
@@ -13,7 +13,15 @@ function Input({ id, label, value, onChange, onBlur, error }) {
     return (
         <div >
             {/* <label htmlFor={id}>{label}</label> */}
-            <input className={[error ? styles.error : '', styles.input].join(' ')} id={id} value={value} name={id} onChange={changeHandler} onBlur={blurHandler} placeholder={label}></input>
+            <input
+                type={type}
+                className={[error ? styles.error : '', styles.input].join(' ')}
+                id={id} value={value}
+                name={id}
+                onChange={changeHandler}
+                onBlur={blurHandler}
+                placeholder={label}
+            />
         </div>
     );
 }

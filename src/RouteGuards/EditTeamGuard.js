@@ -9,28 +9,32 @@ const EditTeamGuard = (props) => {
     const [loading, setLoading] = useState(true);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    const { component: Component, ...rest } = props;
+    const { user, component: Component, ...rest } = props;
 
     useEffect(() => {
-        const path = history.location.pathname
-        const pathTeam = path.includes('edit') ? path.split('/')[2] : ''
-        const fetchData = async () => {
-            const teams = await getUserTeams();
-            // const teams = await result.json()
-            const [team] = Object.values(teams).filter(x => {
-                if (x.teamName) {
-                    let modified = x.teamName.toLowerCase().split(' ').join('-')
-                    return modified === pathTeam
-                }
-            })
-            if (team) {
-                setIsAuthenticated(true)
-            } else {
-                setIsAuthenticated(false)
-            }
+        if (!user) {
+            setIsAuthenticated(false)
             setLoading(false);
-        };
-        fetchData();
+        } else {
+            const path = history.location.pathname
+            const pathTeam = path.includes('edit') ? path.split('/')[2] : ''
+            const fetchData = async () => {
+                const teams = await getUserTeams();
+                const [team] = Object.values(teams).filter(x => {
+                    if (x.teamName) {
+                        let modified = x.teamName.toLowerCase().split(' ').join('-')
+                        return modified === pathTeam
+                    }
+                })
+                if (team) {
+                    setIsAuthenticated(true)
+                } else {
+                    setIsAuthenticated(false)
+                }
+                setLoading(false);
+            };
+            fetchData();
+        }
     }, []);
 
     return (
