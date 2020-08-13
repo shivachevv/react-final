@@ -8,6 +8,7 @@ import CreateTeam from './views/CreateTeam/CreateTeam'
 import TeamDetails from './views/TeamDetails/TeamDetails'
 import EditTeam from './views/EditTeam/EditTeam'
 import AdminPanel from './views/AdminPanel/AdminPanel'
+import Standings from './views/Standings/Standings'
 import ErrorPage from './views/ErrorPage/ErrorPage'
 import getUserTeams from './utils/getUserTeams'
 import EditTeamGuard from './RouteGuards/EditTeamGuard'
@@ -99,6 +100,7 @@ const Routes = (props) => {
             }
             } />
             <Route path="/team-details/:id" exact component={TeamDetails} />
+            <Route path="/standings" exact component={Standings} />
            
             <EditTeamGuard path="/edit-team/:id" component={EditTeam} user={user}/>
 
