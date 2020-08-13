@@ -12,6 +12,7 @@ import Standings from './views/Standings/Standings'
 import ErrorPage from './views/ErrorPage/ErrorPage'
 import getUserTeams from './utils/getUserTeams'
 import EditTeamGuard from './RouteGuards/EditTeamGuard'
+import About from './views/About/About'
 
 
 const Routes = (props) => {
@@ -101,8 +102,8 @@ const Routes = (props) => {
             } />
             <Route path="/team-details/:id" exact component={TeamDetails} />
             <Route path="/standings" exact component={Standings} />
-           
-            <EditTeamGuard path="/edit-team/:id" component={EditTeam} user={user}/>
+
+            <EditTeamGuard path="/edit-team/:id" component={EditTeam} user={user} />
 
             <Route path="/admin" exact render={() => {
                 if (adminLoading) {
@@ -112,7 +113,7 @@ const Routes = (props) => {
                 }
             }
             } />
-
+            <Route path="/about" exact component={About} />
             <Route component={ErrorPage} />
         </Switch>
     )

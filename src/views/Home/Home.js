@@ -3,8 +3,6 @@ import styles from './home.module.scss'
 import { UserContext } from '../../UserProvider'
 import JoinUsBtn from '../../components/JoinUsBtn/JoinUsBtn'
 import Slider from '../../components/Slider/Slider'
-import TeamsRibbon from '../../components/TeamsRibbon/TeamsRibbon'
-// import getAllPlayers from '../../utils/getAllPlayers';
 import calculateDreamTeam from '../../utils/calculateDreamTeam'
 import Loading from '../../components/Loading/Loading'
 import changePageTitle from '../../utils/changePageTitle'

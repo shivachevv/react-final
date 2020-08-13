@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import styles from './standings.module.scss'
 import Loading from '../../components/Loading/Loading'
 import getStandings from '../../utils/getStandings'
+import changePageTitle from '../../utils/changePageTitle'
 
 function Standings(props) {
 
@@ -10,6 +11,8 @@ function Standings(props) {
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
+        changePageTitle("Standings")
+
         const getData = async () => {
             const result = await getStandings(1)
             setStandings(result)

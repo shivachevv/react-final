@@ -14,6 +14,10 @@ const defineLinks = (user, loggedId, logo) => {
                 path: `/team-details/${loggedId}`,
                 label: "My Team",
                 logo: logo
+            },
+            {
+                path: "/about",
+                label: "About FFL"
             }
         ]
     } else {
@@ -33,6 +37,10 @@ const defineLinks = (user, loggedId, logo) => {
             {
                 path: "/register",
                 label: "Register"
+            },
+            {
+                path: "/about",
+                label: "About FFL"
             }
         ]
     }
