@@ -43,7 +43,7 @@ const EditTeamGuard = (props) => {
                     <Loading />
                 ) : (
                             <Redirect
-                                to={{ pathname: "/login", }}
+                                to={{ pathname: "/", }}
                             />
                         )
             }

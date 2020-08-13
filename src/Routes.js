@@ -14,15 +14,12 @@ import EditTeamGuard from './RouteGuards/EditTeamGuard'
 
 
 const Routes = (props) => {
-    const history = useHistory();
     const user = props.user
     const [createTeamGuard, setCreateTeamGuard] = useState(true)
-    const [editTeamGuard, setEditTeamGuard] = useState(true)
     const [adminGuard, setAdminGuard] = useState(false)
 
     const [adminLoading, setAdminLoading] = useState(true)
     const [createTeamLoading, setCreateTeamLoading] = useState(true)
-    const [editTeamLoading, setEditTeamLoading] = useState(true)
 
     // CREATE TEAM GUARD
     useEffect(() => {
@@ -59,47 +56,6 @@ const Routes = (props) => {
         createTeamGuardFn();
     }, [user])
 
-
-    // EDIT TEAM GUARD
-    // useEffect(() => {
-    //     console.log('editteam1');
-
-
-    //     const ac = new AbortController()
-    //     const path = history.location.pathname
-    //     const pathTeam = path.includes('edit') ? path.split('/')[3] : ''
-    //     if (user) {
-    //         console.log('editteam2');
-
-    //         getUserTeams().then(teams => {
-    //             console.log('editteam3');
-
-    //             const [team] = Object.values(teams).filter(x => {
-    //                 console.log('editteam4', path, pathTeam);
-
-    //                 if (x.teamName) {
-    //                     let modified = x.teamName.toLowerCase().split(' ').join('-')
-    //                     return modified === pathTeam
-    //                 }
-    //             })
-    //             console.log('team', team);
-    //             if (team) {
-    //                 console.log('editteam5');
-
-    //                 setEditTeamGuard(team.uid === user.uid)
-    //                 setEditTeamLoading(false)
-    //             }
-    //             else {
-    //                 console.log('editteam6');
-
-    //                 setEditTeamGuard(false)
-    //                 setEditTeamLoading(false)
-    //             }
-    //         })
-    //     }
-    //     return () => ac.abort()
-    // }, [user])
-
     // ADMIN PANEL GUARD 
     useEffect(() => {
         if (user) {
@@ -119,37 +75,6 @@ const Routes = (props) => {
             setAdminLoading(false)
         }
     }, [user])
-
-    // const editGuard = () => {
-    //     setEditTeamLoading(true)
-    //     const path = history.location.pathname
-    //     const pathTeam = path.includes('edit') ? path.split('/')[2] : ''
-    //     console.log(path, pathTeam);
-        
-    //     getUserTeams().then(teams => {
-    //         // console.log('editteam3');
-
-    //         const [team] = Object.values(teams).filter(x => {
-    //             // console.log('editteam4', path, pathTeam);
-
-    //             if (x.teamName) {
-    //                 let modified = x.teamName.toLowerCase().split(' ').join('-')
-    //                 return modified === pathTeam
-    //             }
-    //         })
-    //         console.log('team', team);
-    //         if (team) {
-    //             console.log('editteam5');
-    //             setEditTeamLoading(false)
-    //             return true
-    //         }
-    //         else {
-    //             console.log('editteam6');
-    //             setEditTeamLoading(false)
-    //             return false
-    //         }
-    //     })
-    // }
 
     return (
         <Switch>
@@ -174,23 +99,8 @@ const Routes = (props) => {
             }
             } />
             <Route path="/team-details/:id" exact component={TeamDetails} />
-            {/* <Route path="/edit-team/:id" exact render={async () => {
-                const guard = await editGuard()
-                if (editTeamLoading) {
-                    return <Loading />
-                } else {
-                    if (guard) {
-                        console.log('final check2')
-                        return <EditTeam />
-                    } else {
-                        console.log('final check3')
-                        return <Redirect to="/" />
-                    }
-                }
-            }
-
-            } /> */}
-            <EditTeamGuard path="/edit-team/:id" component={EditTeam}/>
+           
+            <EditTeamGuard path="/edit-team/:id" component={EditTeam} />
 
             <Route path="/admin" exact render={() => {
                 if (adminLoading) {
@@ -200,7 +110,6 @@ const Routes = (props) => {
                 }
             }
             } />
-
 
             <Route component={ErrorPage} />
         </Switch>
