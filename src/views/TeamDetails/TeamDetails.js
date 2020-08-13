@@ -61,4 +61,4 @@ function TeamDetails(props) {
     );
 }
 
-export default withRouter(TeamDetails);
+export default TeamDetails

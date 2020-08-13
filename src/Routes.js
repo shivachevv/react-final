@@ -10,6 +10,8 @@ import EditTeam from './views/EditTeam/EditTeam'
 import AdminPanel from './views/AdminPanel/AdminPanel'
 import ErrorPage from './views/ErrorPage/ErrorPage'
 import getUserTeams from './utils/getUserTeams'
+import EditTeamGuard from './RouteGuards/EditTeamGuard'
+
 
 const Routes = (props) => {
     const history = useHistory();
@@ -24,32 +26,32 @@ const Routes = (props) => {
 
     // CREATE TEAM GUARD
     useEffect(() => {
-        console.log('register check1')
+        // console.log('register check1')
         async function createTeamGuardFn() {
-            console.log('register check2')
+            // console.log('register check2')
             if (user) {
-                console.log('register check3')
+                // console.log('register check3')
                 const endpoint = user.email.split('.').join('-')
                 const response = await fetch(`https://softuni-react-final.firebaseio.com/users/${endpoint}.json`)
                 const data = await response.json()
                 if (!data) {
-                    console.log('register check4')
+                    // console.log('register check4')
 
                     setCreateTeamGuard(false)
                     setCreateTeamLoading(false)
                 } else if (data && !data.teamName) {
-                    console.log('register check5')
+                    // console.log('register check5')
                     setCreateTeamGuard(false)
                     setCreateTeamLoading(false)
                 }
                 else {
-                    console.log('register check6')
+                    // console.log('register check6')
 
                     setCreateTeamGuard(true)
                     setCreateTeamLoading(false)
                 }
             } else {
-                console.log('register check7')
+                // console.log('register check7')
                 setCreateTeamGuard(true)
                 setCreateTeamLoading(false)
             }
@@ -57,44 +59,46 @@ const Routes = (props) => {
         createTeamGuardFn();
     }, [user])
 
+
     // EDIT TEAM GUARD
-    useEffect(() => {
-        console.log('editteam1', history);
+    // useEffect(() => {
+    //     console.log('editteam1');
 
 
-        const ac = new AbortController()
-        const path = history.location.pathname
-        const pathTeam = path.includes('edit') ? path.split('/')[3] : ''
-        if (user) {
-            console.log('editteam2');
+    //     const ac = new AbortController()
+    //     const path = history.location.pathname
+    //     const pathTeam = path.includes('edit') ? path.split('/')[3] : ''
+    //     if (user) {
+    //         console.log('editteam2');
 
-            getUserTeams().then(teams => {
-                console.log('editteam3');
+    //         getUserTeams().then(teams => {
+    //             console.log('editteam3');
 
-                const [team] = Object.values(teams).filter(x => {
-                    console.log('editteam4');
+    //             const [team] = Object.values(teams).filter(x => {
+    //                 console.log('editteam4', path, pathTeam);
 
-                    if (x.teamName) {
-                        let modified = x.teamName.toLowerCase().split(' ').join('-')
-                        return modified === pathTeam
-                    }
-                })
-                if (team) {
-                    console.log('editteam5');
+    //                 if (x.teamName) {
+    //                     let modified = x.teamName.toLowerCase().split(' ').join('-')
+    //                     return modified === pathTeam
+    //                 }
+    //             })
+    //             console.log('team', team);
+    //             if (team) {
+    //                 console.log('editteam5');
 
-                    setEditTeamGuard(team.uid === user.uid)
-                    setEditTeamLoading(false)
-                }
-                else {
-                    console.log('editteam6');
+    //                 setEditTeamGuard(team.uid === user.uid)
+    //                 setEditTeamLoading(false)
+    //             }
+    //             else {
+    //                 console.log('editteam6');
 
-                    setEditTeamGuard(false)
-                    setEditTeamLoading(false)
-                }
-            })
-        }
-        return () => ac.abort()
-    }, [history])
+    //                 setEditTeamGuard(false)
+    //                 setEditTeamLoading(false)
+    //             }
+    //         })
+    //     }
+    //     return () => ac.abort()
+    // }, [user])
 
     // ADMIN PANEL GUARD 
     useEffect(() => {
@@ -116,6 +120,36 @@ const Routes = (props) => {
         }
     }, [user])
 
+    // const editGuard = () => {
+    //     setEditTeamLoading(true)
+    //     const path = history.location.pathname
+    //     const pathTeam = path.includes('edit') ? path.split('/')[2] : ''
+    //     console.log(path, pathTeam);
+        
+    //     getUserTeams().then(teams => {
+    //         // console.log('editteam3');
+
+    //         const [team] = Object.values(teams).filter(x => {
+    //             // console.log('editteam4', path, pathTeam);
+
+    //             if (x.teamName) {
+    //                 let modified = x.teamName.toLowerCase().split(' ').join('-')
+    //                 return modified === pathTeam
+    //             }
+    //         })
+    //         console.log('team', team);
+    //         if (team) {
+    //             console.log('editteam5');
+    //             setEditTeamLoading(false)
+    //             return true
+    //         }
+    //         else {
+    //             console.log('editteam6');
+    //             setEditTeamLoading(false)
+    //             return false
+    //         }
+    //     })
+    // }
 
     return (
         <Switch>
@@ -140,18 +174,24 @@ const Routes = (props) => {
             }
             } />
             <Route path="/team-details/:id" exact component={TeamDetails} />
-            <Route path="/team-details/edit/:id" exact render={() => {
-                
+            {/* <Route path="/edit-team/:id" exact render={async () => {
+                const guard = await editGuard()
                 if (editTeamLoading) {
-                    console.log('final check2')
                     return <Loading />
                 } else {
-                    console.log('final check3')
-                    return editTeamGuard ? <EditTeam /> : <Redirect to="/" />
+                    if (guard) {
+                        console.log('final check2')
+                        return <EditTeam />
+                    } else {
+                        console.log('final check3')
+                        return <Redirect to="/" />
+                    }
                 }
             }
 
-            } />
+            } /> */}
+            <EditTeamGuard path="/edit-team/:id" component={EditTeam}/>
+
             <Route path="/admin" exact render={() => {
                 if (adminLoading) {
                     return <Loading />

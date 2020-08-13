@@ -4,7 +4,7 @@ import styles from './editteambtn.module.scss'
 
 function EditTeamBtn({id}) {
     return (
-        <Link className={styles.link} to={`edit/${id}`}>Edit Your Team!</Link>
+        <Link className={styles.link} to={`/edit-team/${id}`}>Edit Your Team!</Link>
     );
 }
 
