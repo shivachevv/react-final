@@ -10,6 +10,8 @@ Implemented are:
 - Team details page (visible for everyone)
 - Edit team page (for the team owner only) (to be fixed)
 - Admin panel (visible only for users with admin rights)
+- test admin user is created:
+    user: admin@admin.bg, pass: qweqwe
 
 User can register and pick his initial team. 
 The user can change players, team name and logo.
