@@ -5,6 +5,7 @@
     justify-content: flex-start;
     align-items: center;
     margin: 20px 0 0 0;
+    position: relative;
 
     .buttons {
         width: 100%;
@@ -42,6 +43,24 @@
             flex-direction: column;
             justify-content: flex-start;
             align-items: center;
+            transition: all 0.3s;
+
+            &:hover {
+                background-color: #134b157a;
+                border-radius: 5px;
+                cursor: pointer;
+                overflow: hidden;
+
+                img {
+                    transform: scale(1.05);
+                }
+            }
+
+            &:active {
+                background-color: #134b15;
+                border-radius: 5px;
+                overflow: hidden;
+            }
 
             img {
                 height: 60px;

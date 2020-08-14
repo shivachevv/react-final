@@ -20,7 +20,6 @@ function AdminPanel(props) {
     useEffect(() => {
         changePageTitle("Admin Panel")
         getAllPlayersPts().then(data => {
-            console.log('update');
             setPlayers(data)
         }).catch(e => console.log(e))
     }, [updatePlayersFlag])

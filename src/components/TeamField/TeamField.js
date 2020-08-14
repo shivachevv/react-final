@@ -3,11 +3,14 @@ import ChangeRndBtn from '../ChangeRndBtn/ChangeRndBtn';
 import styles from './teamfield.module.scss'
 import getPlayersStats from '../../utils/getPlayersStats'
 import { getRounds } from '../../utils/getRounds'
+import Popup from '../../components/Popup/Popup'
 
 function TeamField({ teamsPerRnd }) {
     const [roundCounter, setRoundCounter] = useState(1)
     const [allPlayers, setAllPlayers] = useState(null)
     const [roundsCount, setRoundsCount] = useState(null)
+    const [popupData, setPopupData] = useState(null)
+    const [popupActive, setPopupActive] = useState(null)
 
     useEffect(() => {
         getPlayersStats().then(data => setAllPlayers(data))
@@ -30,7 +33,24 @@ function TeamField({ teamsPerRnd }) {
     }
 
 
+    const popupHandler = (x) => {
+        const player = teamsPerRnd[`r${roundCounter}`][x]
+        const { name, pos, shirt, rounds, team } = allPlayers[makeNameEqual(player)]
+        const playerPts = rounds[roundCounter] ? rounds[roundCounter].pts : ''
 
+        setPopupData({
+            name,
+            pos,
+            shirt,
+            rounds,
+            team
+        })
+        setPopupActive(true)
+    }
+
+    const closePopup = () => {
+        return setPopupActive(false)
+    }
 
     return (
         <div className={styles.container}>
@@ -47,7 +67,7 @@ function TeamField({ teamsPerRnd }) {
                             const { name, pos, shirt, rounds, team } = allPlayers[makeNameEqual(player)]
                             const playerPts = rounds[roundCounter] ? rounds[roundCounter].pts : ''
                             return (
-                                <div key={x} className={[styles.teammate, styles[pos]].join(' ')}>
+                                <div key={x} className={[styles.teammate, styles[pos]].join(' ')} onClick={() => popupHandler(x)}>
                                     <img src={`http://ff-legends.com/images/teamkits/${shirt}.png`} />
                                     <div>
                                         <h3 className={styles.pos}>Position: {pos}</h3>
@@ -58,9 +78,10 @@ function TeamField({ teamsPerRnd }) {
                             )
                         })
                         :
-                        <div className={[styles.noteam, "up"].join(' ')}>You have not selected team for<br/>round {roundCounter}!</div>
+                        <div className={[styles.noteam, "up"].join(' ')}>You have not selected team for<br />round {roundCounter}!</div>
                     }
                 </div>}
+            {popupActive ? <Popup data={popupData} closePopup={closePopup} /> : ''}
         </div>
     );
 }
