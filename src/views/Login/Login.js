@@ -28,7 +28,7 @@ class Login extends Component {
         }
     }
 
-    componentWillMount(){
+    componentDidMount(){
         changePageTitle("Login!")
     }
 

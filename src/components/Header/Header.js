@@ -9,20 +9,19 @@ import defineLinks from '../../NavLinksProvider'
 import getUserTeams from '../../utils/getUserTeams'
 
 function Header(props) {
-    const history = useHistory();
     const user = useContext(UserContext)
     const [loggedId, setLoggedId] = useState(null)
     const [loggedLogo, setLoggedLogo] = useState(null)
+    const [showAdmin, setShowAdmin] = useState(false)
 
     useEffect(() => {
         const ac = new AbortController()
-
         if (user) {
             getUserTeams().then(data => {
                 const [result] = Object.values(data).filter(x => {
                     return x.uid === user.uid
                 })
-                // console.log('header1', result)
+                setShowAdmin(result.isAdmin)
                 if (result && result.teamLogo && result.teamName) {
                     // console.log('header2', result)
 
@@ -31,7 +30,7 @@ function Header(props) {
                 }
             })
         } else {
-            // console.log('else header')
+            setShowAdmin(false)
         }
         return () => ac.abort()
     }, [user])
@@ -57,6 +56,7 @@ function Header(props) {
                     </div>
                 })}
                 {user ? <a href="" className={styles.navlinks} onClick={logoutUser}>Logout</a> : ''}
+                {showAdmin ? <Link to="/admin" className={styles.navlinks}>Admin Panel</Link> : ''}
             </div>
         </nav>
     );

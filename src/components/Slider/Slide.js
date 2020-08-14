@@ -10,7 +10,7 @@ function Slide({ width, content }) {
     }
     return (
         <div style={slideStyle} className={styles.container}>
-            <img src={`http://ff-legends.com/images/teamkits/${content.shirt}.png`} />
+            <img src={`http://ff-legends.com/images/teamkits/${content.shirt}.png`} alt="Player"/>
             <h3 className={styles.pos}>Position: {content.pos}</h3>
             <h3 className={styles.name}>{content.name} : {content.total}pts</h3>
             <h3 className={styles.team}>{beautifyTeam(content.team)}</h3>

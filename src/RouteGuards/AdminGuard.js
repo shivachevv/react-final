@@ -22,12 +22,32 @@ const AdminGuard = (props) => {
                     setIsAuthenticated(team.isAdmin)
                     setLoading(false)
                 }
+                return 
             })
         } else {
             setIsAuthenticated(false)
             setLoading(false)
         }
     }, [])
+
+    useEffect(() => {
+        if (user) {
+            getUserTeams().then(teams => {
+                const [team] = Object.values(teams).filter(x => {
+                    if (x.uid) {
+                        return x.uid === user.uid
+                    }
+                })
+                if (team) {
+                    setIsAuthenticated(team.isAdmin)
+                    setLoading(false)
+                }
+            })
+        } else {
+            setIsAuthenticated(false)
+            setLoading(false)
+        }
+    }, [user])
 
     return (
         <Route
