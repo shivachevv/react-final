@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import styles from './adminpanel.module.scss'
 import getAllPlayersPts from '../../utils/getAllPlayersPts'
 import { getRounds, addRound } from '../../utils/getRounds'
 import Badge from '../../components/Badge/Badge'
 import Loading from '../../components/Loading/Loading'
 import changePageTitle from '../../utils/changePageTitle'
-
+import { UserContext } from '../../UserProvider';
 
 const API_POINTS_URL = 'https://softuni-react-final.firebaseio.com/allPlayersPts'
 
 function AdminPanel(props) {
+    const user = useContext(UserContext)
 
     const [teamSelected, setTeamSelected] = useState('afc_bournemouth')
     const [players, setPlayers] = useState(null)
@@ -35,7 +36,7 @@ function AdminPanel(props) {
         }
     }
 
-    const ptsSubmitHandler = e => {
+    const ptsSubmitHandler = async e => {
         e.preventDefault()
 
         const URL = e.currentTarget.ptsInput.dataset.path
@@ -43,7 +44,9 @@ function AdminPanel(props) {
             "pts": e.currentTarget.ptsInput.value
         }
 
-        fetch(URL, {
+        const idToken = await user.getIdToken()
+        
+        fetch(`${URL}?auth=${idToken}`, {
             method: 'PATCH',
             mode: 'cors',
             headers: {
@@ -88,7 +91,7 @@ function AdminPanel(props) {
     const prettyName = (v) => {
         return v.split('_').join('.')
     }
-    
+
     if (players && rounds) {
         const teamToShow = players[teamSelected]
 

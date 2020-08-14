@@ -127,7 +127,7 @@ class EditTeam extends Component {
         return result
     }
 
-    handleSubmitTeam = (e) => {
+    handleSubmitTeam = async e => {
         e.preventDefault()
         const { teamName, teamLogo, userTeam, currentUserTeam, rounds, user } = this.state
         const { teamLogoErr, teamNameErr, teamUniqueName } = this.state.errors
@@ -144,7 +144,9 @@ class EditTeam extends Component {
                 }
             }
             const name = this.state.user.email.split('.').join('-')
-            fetch(`https://softuni-react-final.firebaseio.com/users/${name}.json`, {
+            const idToken = await user.getIdToken()
+
+            fetch(`https://softuni-react-final.firebaseio.com/users/${name}.json?auth=${idToken}`, {
                 method: 'PATCH',
                 mode: 'cors',
                 headers: {
