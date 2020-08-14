@@ -10,7 +10,7 @@ import EditTeam from './views/EditTeam/EditTeam'
 import AdminPanel from './views/AdminPanel/AdminPanel'
 import Standings from './views/Standings/Standings'
 import ErrorPage from './views/ErrorPage/ErrorPage'
-import getUserTeams from './utils/getUserTeams'
+import AdminGuard from './RouteGuards/AdminGuard'
 import EditTeamGuard from './RouteGuards/EditTeamGuard'
 import About from './views/About/About'
 
@@ -58,26 +58,6 @@ const Routes = (props) => {
         createTeamGuardFn();
     }, [user])
 
-    // ADMIN PANEL GUARD 
-    useEffect(() => {
-        if (user) {
-            getUserTeams().then(teams => {
-                const [team] = Object.values(teams).filter(x => {
-                    if (x.uid) {
-                        return x.uid === user.uid
-                    }
-                })
-                if (team) {
-                    setAdminGuard(team.isAdmin)
-                    setAdminLoading(false)
-                }
-            })
-        } else {
-            setAdminGuard(false)
-            setAdminLoading(false)
-        }
-    }, [user])
-
     return (
         <Switch>
             <Route path="/" exact component={Home} />
@@ -104,6 +84,7 @@ const Routes = (props) => {
             <Route path="/standings" exact component={Standings} />
 
             <EditTeamGuard path="/edit-team/:id" component={EditTeam} user={user} />
+            <AdminGuard path="/admin" component={AdminPanel} user={user} />
 
             <Route path="/admin" exact render={() => {
                 if (adminLoading) {
