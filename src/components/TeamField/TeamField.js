@@ -13,11 +13,10 @@ function TeamField({ teamsPerRnd }) {
         getPlayersStats().then(data => setAllPlayers(data))
     }, [])
     useEffect(() => {
-        getRounds().then(data => setRoundsCount(data.rounds.length))
+        getRounds().then(data => setRoundsCount(data.rounds.length + 1))
     }, [])
 
     const changeRnd = (v) => {
-        console.log(v)
         if (v >= 1 && v <= roundsCount) {
             return setRoundCounter(v)
         }
@@ -46,12 +45,13 @@ function TeamField({ teamsPerRnd }) {
                         Object.keys(teamsPerRnd[`r${roundCounter}`]).map(x => {
                             const player = teamsPerRnd[`r${roundCounter}`][x]
                             const { name, pos, shirt, rounds, team } = allPlayers[makeNameEqual(player)]
+                            const playerPts = rounds[roundCounter] ? rounds[roundCounter].pts : ''
                             return (
                                 <div key={x} className={[styles.teammate, styles[pos]].join(' ')}>
                                     <img src={`http://ff-legends.com/images/teamkits/${shirt}.png`} />
                                     <div>
                                         <h3 className={styles.pos}>Position: {pos}</h3>
-                                        <h3 className={styles.name}>{name} : {rounds[roundCounter].pts} pts</h3>
+                                        <h3 className={styles.name}>{name} : {rounds[roundCounter] ? playerPts : ''} pts</h3>
                                         <h3 className={styles.team}>{beautifyTeam(team)}</h3>
                                     </div>
                                 </div>

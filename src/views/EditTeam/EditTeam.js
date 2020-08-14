@@ -44,7 +44,7 @@ class EditTeam extends Component {
     componentDidMount() {
         changePageTitle("Edit Team")
         getAllPlayers().then(data => this.setState({ players: data.data }))
-        
+
         getUserTeams().then(data => {
             const [result] = Object.values(data).filter(x => {
                 if (x.teamName) {
@@ -100,8 +100,9 @@ class EditTeam extends Component {
 
 
     renderUserTeam = () => {
+        const { rounds } = this.state
         return this.state.positionLayout.map(pos => {
-            const old_ = this.state.currentUserTeam.rounds.r1[pos]
+            const old_ = this.state.currentUserTeam.rounds[`r${rounds.length}`][pos]
             const new_ = this.state.userTeam[pos]
             const isNew = new_ !== old_ && new_ ? true : false
             return (
@@ -134,7 +135,7 @@ class EditTeam extends Component {
 
         if (!teamLogoErr && !teamNameErr && !teamUniqueName) {
             console.log("UPDATED TEAM IS SENT");
-            const round = `r${rounds[rounds.length - 1]}`
+            const round = `r${rounds[rounds.length - 1] + 1}`
             const payload = {
                 teamName: teamName.trim(),
                 teamLogo: teamLogo.trim(),
