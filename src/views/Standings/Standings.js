@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import {Link} from 'react-router-dom';
 import styles from './standings.module.scss'
 import Loading from '../../components/Loading/Loading'
 import getStandings from '../../utils/getStandings'
 import changePageTitle from '../../utils/changePageTitle'
+import StandingsRow from '../../components/StandingsRow/StandingsRow'
 
 function Standings(props) {
 
@@ -21,10 +21,6 @@ function Standings(props) {
         getData()
     }, [])
 
-    const makeTeamNameLink = (v) => { 
-        return `/team-details/${v.toLowerCase().split(' ').join('-')}`
-    }
-
     if (loading) {
         return <Loading />
     } else {
@@ -39,15 +35,7 @@ function Standings(props) {
                     </div>
                     {standings.map((x, i) => {
                         return (
-                            <Link to={makeTeamNameLink(x[0])} key={x[0]} className={styles.teamrow}>
-                                <span className={styles.place}>{i + 1}.</span>
-
-                                <div className={styles.team}>
-                                    <img src={x[1].teamLogo} alt="Team Logo" />
-                                    <div>{x[0]}</div>
-                                </div>
-                                <span className={styles.pts}>{x[1].total} pts</span>
-                            </Link>
+                            <StandingsRow data={x} index={i}/>
                         )
                     })}
                 </div>
