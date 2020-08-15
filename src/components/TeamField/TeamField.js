@@ -4,13 +4,16 @@ import styles from './teamfield.module.scss'
 import getPlayersStats from '../../utils/getPlayersStats'
 import { getRounds } from '../../utils/getRounds'
 import Popup from '../../components/Popup/Popup'
+import Temmate from '../../components/Temmate/Temmate'
+import Loading from '../../components/Loading/Loading'
+
 
 function TeamField({ teamsPerRnd }) {
     const [roundCounter, setRoundCounter] = useState(1)
     const [allPlayers, setAllPlayers] = useState(null)
     const [roundsCount, setRoundsCount] = useState(null)
     const [popupData, setPopupData] = useState(null)
-    const [popupActive, setPopupActive] = useState(null)
+    const [popupActive, setPopupActive] = useState(false)
 
     useEffect(() => {
         getPlayersStats().then(data => setAllPlayers(data))
@@ -28,11 +31,7 @@ function TeamField({ teamsPerRnd }) {
     const makeNameEqual = (v) => {
         return v.toLowerCase().split(' ').map(l => l.charAt(0).toUpperCase() + l.slice(1)).join(' ').split('.').join('_')
     }
-    const beautifyTeam = (v) => {
-        return v.split('_').join(' ').toUpperCase()
-    }
-
-
+   
     const popupHandler = (x) => {
         const player = teamsPerRnd[`r${roundCounter}`][x]
         const { name, pos, shirt, rounds, team } = allPlayers[makeNameEqual(player)]
@@ -59,7 +58,7 @@ function TeamField({ teamsPerRnd }) {
                 <span className="up">Round: {roundCounter} of {roundsCount}</span>
                 <ChangeRndBtn title="Next Round" onClick={changeRnd} rnd={roundCounter} />
             </div>
-            {allPlayers &&
+            {allPlayers ?
                 <div className={styles.field}>
                     {teamsPerRnd[`r${roundCounter}`] ?
                         Object.keys(teamsPerRnd[`r${roundCounter}`]).map(x => {
@@ -67,21 +66,24 @@ function TeamField({ teamsPerRnd }) {
                             const { name, pos, shirt, rounds, team } = allPlayers[makeNameEqual(player)]
                             const playerPts = rounds[roundCounter] ? rounds[roundCounter].pts : ''
                             return (
-                                <div key={x} className={[styles.teammate, styles[pos]].join(' ')} onClick={() => popupHandler(x)}>
-                                    <img src={`http://ff-legends.com/images/teamkits/${shirt}.png`} />
-                                    <div>
-                                        <h3 className={styles.pos}>Position: {pos}</h3>
-                                        <h3 className={styles.name}>{name} : {rounds[roundCounter] ? playerPts : ''} pts</h3>
-                                        <h3 className={styles.team}>{beautifyTeam(team)}</h3>
-                                    </div>
-                                </div>
-                            )
+                                <Temmate
+                                    className={styles[pos]}
+                                    key={x}
+                                    player={allPlayers[makeNameEqual(player)]}
+                                    playerPts={playerPts}
+                                    popupHandler={popupHandler}
+                                />)
                         })
                         :
                         <div className={[styles.noteam, "up"].join(' ')}>You have not selected team for<br />round {roundCounter}!</div>
                     }
-                </div>}
-            {popupActive ? <Popup data={popupData} closePopup={closePopup} /> : ''}
+                </div>
+                :
+                <Loading />}
+            {popupActive ? <Popup
+                data={popupData}
+                closePopup={closePopup}
+            /> : ''}
         </div>
     );
 }

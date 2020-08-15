@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styles from './popup.module.scss'
 
 
@@ -30,6 +30,8 @@ function Popup({ data, closePopup }) {
                         <span>{x.pts}</span>
                     </div>
                 )
+            } else {
+                return ''
             }
         })
     }

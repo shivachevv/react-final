@@ -1,0 +1,82 @@
+.teammate {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    transition: all 0.3s;
+
+    &:hover {
+        background-color: #134b157a;
+        border-radius: 5px;
+        cursor: pointer;
+        overflow: hidden;
+
+        img {
+            transform: scale(1.05);
+        }
+    }
+
+    &:active {
+        background-color: #134b15;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    img {
+        height: 60px;
+    }
+
+    div {
+        width: 100%;
+        border-radius: 5px;
+        overflow: hidden;
+
+        h3 {
+            width: 100%;
+            padding: 3px;
+            text-align: center;
+            color: #e9e9e9;
+            background-color: #103e10ba;
+        }
+    }
+}
+
+.GK {
+    grid-row: 4 / span 1;
+    grid-column: 2 / span 1;
+}
+
+.DL {
+    grid-row: 3 / span 1;
+    grid-column: 1 / span 1;
+}
+
+.DC {
+    grid-row: 3 / span 1;
+    grid-column: 2 / span 1;
+}
+
+.DR {
+    grid-row: 3 / span 1;
+    grid-column: 3 / span 1;
+}
+
+.ML {
+    grid-row: 2 / span 1;
+    grid-column: 1 / span 1;
+}
+
+.MC {
+    grid-row: 2/ span 1;
+    grid-column: 2 / span 1;
+}
+
+.MR {
+    grid-row: 2 / span 1;
+    grid-column: 3 / span 1;
+}
+
+.ST {
+    grid-row: 1 / span 1;
+    grid-column: 2 / span 1;
+}
