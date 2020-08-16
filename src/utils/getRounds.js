@@ -6,8 +6,11 @@ const getRounds = async () => {
     return data
 }
 
-const addRound = async (payload) => {
-    const response = await fetch(API_ROUNDS_URL, {
+const addRound = async (payload, user) => {
+
+    const idToken = await user.getIdToken()
+
+    const response = await fetch(`${API_ROUNDS_URL}?auth=${idToken}`, {
         method: 'PATCH',
         mode: 'cors',
         headers: {

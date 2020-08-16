@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './standings.module.scss'
 import Loading from '../../components/Loading/Loading'
 import getStandings from '../../utils/getStandings'
+import { getRounds } from '../../utils/getRounds'
 import changePageTitle from '../../utils/changePageTitle'
 import StandingsRow from '../../components/StandingsRow/StandingsRow'
 
@@ -9,12 +10,15 @@ function Standings(props) {
 
     const [standings, setStandings] = useState(null)
     const [loading, setLoading] = useState(true)
+    const [rounds, setRounds] = useState(0)
+
 
     useEffect(() => {
         changePageTitle("Standings")
-
         const getData = async () => {
-            const result = await getStandings(1)
+            const rounds = await getRounds()
+            const roundsCount = Object.keys(rounds.rounds).length
+            const result = await getStandings(roundsCount)
             setStandings(result)
             setLoading(false)
         }
@@ -35,7 +39,7 @@ function Standings(props) {
                     </div>
                     {standings.map((x, i) => {
                         return (
-                            <StandingsRow data={x} index={i}/>
+                            <StandingsRow data={x} index={i} key={i}/>
                         )
                     })}
                 </div>

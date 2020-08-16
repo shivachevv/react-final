@@ -30,11 +30,11 @@ function AdminPanel(props) {
     const roundHandler = {
         add: () => {
             rounds.push(rounds.length + 1)
-            return addRound({ rounds })
+            return addRound({ rounds }, user)
         },
         remove: () => {
             rounds.pop()
-            return addRound({ rounds })
+            return addRound({ rounds }, user)
         }
     }
 

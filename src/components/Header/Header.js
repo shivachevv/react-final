@@ -20,9 +20,10 @@ function Header(props) {
                 const [result] = Object.values(data).filter(x => {
                     return x.uid === user.uid
                 })
-                setShowAdmin(result.isAdmin)
+                if (result) {
+                    setShowAdmin(result.isAdmin)
+                }
                 if (result && result.teamLogo && result.teamName) {
-                    // console.log('header2', result)
 
                     setLoggedLogo(result.teamLogo)
                     setLoggedId(result.teamName.toLowerCase().split(' ').join('-'))

@@ -28,7 +28,6 @@ class EditTeam extends Component {
             chosenClub: '',
             userTeam: {},
             positionLayout: ['gk', 'dl', 'dc', 'dr', 'ml', 'mc', 'mr', 'st'],
-            // isTeamFull: false,
             teamName: '',
             teamLogo: '',
             errors: {
@@ -59,13 +58,6 @@ class EditTeam extends Component {
 
         getRounds().then(data => this.setState({ rounds: data.rounds }))
     }
-
-    // updateIsTeamFull = () => {
-    //     const isTeamFull = Object.keys(this.state.userTeam).length === 8
-    //     return this.setState({
-    //         isTeamFull
-    //     })
-    // }
 
     selectClub = (e) => {
         e.preventDefault()
@@ -98,13 +90,19 @@ class EditTeam extends Component {
         return Object.keys(this.state.userTeam).length ? true : false
     }
 
+    updateIsTeamFull = () => {
+        const isTeamFull = Object.keys(this.state.userTeam).length === 8
+        return isTeamFull
+    }
+
 
     renderUserTeam = () => {
         const { rounds } = this.state
         return this.state.positionLayout.map(pos => {
-            const old_ = this.state.currentUserTeam.rounds[`r${rounds.length}`][pos]
+            const old_ = this.state.currentUserTeam.rounds[`r${rounds.length}`] ? this.state.currentUserTeam.rounds[`r${rounds.length}`][pos] : ''
             const new_ = this.state.userTeam[pos]
             const isNew = new_ !== old_ && new_ ? true : false
+            console.log(isNew);
             return (
                 <div key={pos} className={[styles.player, styles[pos], 'up'].join(' ')}>
                     <span>{pos.toUpperCase()}</span>
@@ -133,7 +131,7 @@ class EditTeam extends Component {
         const { teamName, teamLogo, userTeam, currentUserTeam, rounds, user } = this.state
         const { teamLogoErr, teamNameErr, teamUniqueName } = this.state.errors
 
-        if (!teamLogoErr && !teamNameErr && !teamUniqueName) {
+        if (!teamLogoErr && !teamNameErr && !teamUniqueName && this.updateIsTeamFull()) {
             console.log("UPDATED TEAM IS SENT");
             const round = `r${rounds[rounds.length - 1] + 1}`
             const payload = {
@@ -284,7 +282,7 @@ class EditTeam extends Component {
                                 }
                             })}
                     </div>
-                    <ErrorMsg error={submitError} msg="You are missing something!" />
+                    <ErrorMsg error={submitError} msg="Your team is not complete!" />
                     <SubmitBtn title="Edit your team!" />
                 </form>
             );

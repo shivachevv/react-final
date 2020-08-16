@@ -16,7 +16,9 @@ function TeamField({ teamsPerRnd }) {
     const [popupActive, setPopupActive] = useState(false)
 
     useEffect(() => {
-        getPlayersStats().then(data => setAllPlayers(data))
+        getPlayersStats().then(data => {
+            setAllPlayers(data)
+        })
     }, [])
     useEffect(() => {
         getRounds().then(data => setRoundsCount(data.rounds.length + 1))
@@ -30,8 +32,9 @@ function TeamField({ teamsPerRnd }) {
 
     const makeNameEqual = (v) => {
         return v.toLowerCase().split(' ').map(l => l.charAt(0).toUpperCase() + l.slice(1)).join(' ').split('.').join('_')
+                    .split('-').map(l => l.charAt(0).toUpperCase() + l.slice(1)).join('-')
     }
-   
+
     const popupHandler = (x) => {
         const player = teamsPerRnd[`r${roundCounter}`][x]
         const { name, pos, shirt, rounds, team } = allPlayers[makeNameEqual(player)]
