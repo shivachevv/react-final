@@ -14,6 +14,8 @@ Implemented are:
     user: admin@admin.bg, pass: qweqwe
    
 - About us page
+- Popup for the players' stats
+- Backend DB security with Firebase (PARTIALLY)
 
 
 User can register and pick his initial team. 
@@ -23,7 +25,5 @@ The user can change players, team name and logo.
 // TO BE IMPLEMENTED IN THE NEAR FUTURE
 
 - Transfer counts (users to have 1 transfer per week)
-- Popup for the players' stats
-- Backend DB security with Firebase
 
 
