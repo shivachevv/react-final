@@ -1,7 +1,7 @@
 import React, {useContext, useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../../images/logo.png'
-import fb from '../../images/fb.png'
+// import logo from 'https://gdurl.com/gmJJ'
+// import fb from 'https://gdurl.com/0-Psn'
 import styles from './footer.module.scss'
 import defineLinks from '../../NavLinksProvider'
 import { UserContext } from '../../UserProvider'
@@ -30,7 +30,7 @@ function Footer(props) {
     return (
         <footer>
             <div className={styles.footerside}>
-                <img src={logo} alt=""></img>
+                <img src="https://gdurl.com/gmJJ" alt="Logo"></img>
                 <Link className="up" to="/">fantasy legends</Link>
             </div>
 
@@ -43,7 +43,7 @@ function Footer(props) {
             <div className={styles.footerside}>
                 <a className="up" href="https://www.facebook.com/groups/393007311341533/?ref=group_header" target="blank">Follow the legends</a>
                 <a href="https://www.facebook.com/groups/393007311341533/?ref=group_header" target="blank">
-                    <img src={fb} alt=""></img>
+                    <img src="https://gdurl.com/0-Psn" alt="fb"></img>
                 </a>
             </div>
         </footer>

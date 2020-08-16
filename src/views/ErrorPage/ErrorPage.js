@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './errorpage.module.scss'
 import changePageTitle from '../../utils/changePageTitle'
-import errorImage from '../../images/404.jpeg'
+// import errorImage from 'https://gdurl.com/yJLP'
 
 function ErrorPage(props) {
     changePageTitle("Page not found")
@@ -10,7 +10,7 @@ function ErrorPage(props) {
     return (
         <div className={styles.error}>
             <h1>¡Ay, caramba!</h1>
-            <img src={errorImage} alt="404" />
+            <img src="https://gdurl.com/yJLP" alt="404" />
             <Link to="/">Back to FFL Home!</Link>
         </div>
     );

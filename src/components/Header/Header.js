@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom'
 import styles from './header.module.scss'
-import logo from '../../images/logo.png'
+// import logo from '../../images/logo.png'
 import { UserContext } from '../../UserProvider'
 import { auth } from '../../firebase'
 import defineLinks from '../../NavLinksProvider'
@@ -45,7 +44,7 @@ function Header(props) {
     return (
         <nav className="sha">
             <Link className={styles.logo} to="/">
-                <img src={logo} alt="Logo" />
+                <img src="https://gdurl.com/G_jp" alt="Logo" />
             </Link>
 
             <div className={[styles.navigation, styles.up].join(' ')}>
