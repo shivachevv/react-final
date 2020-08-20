@@ -102,7 +102,7 @@ class EditTeam extends Component {
             const old_ = this.state.currentUserTeam.rounds[`r${rounds.length}`] ? this.state.currentUserTeam.rounds[`r${rounds.length}`][pos] : ''
             const new_ = this.state.userTeam[pos]
             const isNew = new_ !== old_ && new_ ? true : false
-            console.log(isNew);
+
             return (
                 <div key={pos} className={[styles.player, styles[pos], 'up'].join(' ')}>
                     <span>{pos.toUpperCase()}</span>
